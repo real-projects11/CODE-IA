@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web con IA — Asesoría personalizada 1 a 1</title>
+<meta name="description" content="Sesión privada de 90 minutos para convertir tu idea en una web funcional con IA. USD 35. 20 lugares disponibles.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#05070c;
+    --bg-1:#080b13;
+    --bg-2:#0c111d;
+    --bg-3:#111729;
+    --line:rgba(255,255,255,0.08);
+    --line-soft:rgba(255,255,255,0.05);
+    --text-0:#f2f5fa;
+    --text-1:#9aa3b5;
+    --text-2:#5f6879;
+    --accent:#3E7BFA;
+    --accent-bright:#7FB4FF;
+    --accent-dim:#1E3A8A;
+    --accent-glow:rgba(62,123,250,0.35);
+    --glass-bg:rgba(18,26,46,0.55);
+    --glass-border:rgba(255,255,255,0.10);
+    --glass-highlight:rgba(255,255,255,0.06);
+    --radius:14px;
+    --radius-pill:999px;
+    --radius-btn:18px;
+    --ease:cubic-bezier(.16,.8,.28,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg-0);
+    color:var(--text-0);
+    font-family:'Outfit',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    opacity:0.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection{ background:var(--accent-dim); color:#fff; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px; }
+  .mono{ font-family:'JetBrains Mono',monospace; }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono',monospace; font-size:11px;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--accent-bright);
+    padding:7px 14px; border:1px solid rgba(62,123,250,0.3);
+    border-radius:100px; background:rgba(62,123,250,0.06);
+  }
+  .eyebrow::before{
+    content:""; width:6px;height:6px;border-radius:50%;
+    background:var(--accent-bright); box-shadow:0 0 8px var(--accent-bright);
+  }
+
+  h1,h2,h3{ font-weight:800; letter-spacing:-0.02em; line-height:1.05; }
+
+  /* Ajustes de espaciado y tamaños estilo micro1.ai */
+  .section-title{ font-size:clamp(36px, 5.5vw, 56px); font-weight:800; color:var(--text-0); letter-spacing: -0.03em; }
+  .section-sub{ color:var(--text-1); font-size:clamp(17px, 2.5vw, 22px); font-weight:400; line-height:1.5; max-width:640px; margin-top: 24px; }
+  .section-pad{ padding:160px 0; position:relative; }
+  @media (max-width:768px){
+    .section-pad{ padding:110px 0; }
+
+    h1, .hero-title{ line-height:1.2; letter-spacing:-0.015em; }
+
+    .hero-sub, .section-sub{ line-height:1.6; padding-left:15px; padding-right:15px; }
+  }
+
+  .divider-fade{
+    position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg,transparent,var(--line),transparent);
+  }
+
+  .reveal{
+    opacity:0; transform:translateY(24px);
+    transition:opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* BOTONES INTACTOS (Sin modificaciones según instrucciones) */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    font-weight:600; font-size:13.5px; letter-spacing: 0.04em; 
+    border-radius:var(--radius-btn);
+    transition:transform 0.3s var(--ease), box-shadow 0.3s var(--ease), filter 0.3s var(--ease), background 0.3s var(--ease);
+    white-space:nowrap;
+  }
+  .btn-primary{
+    display:flex; align-items:center; justify-content:center; gap:16px;
+    padding:6px; padding-left:28px;
+    background:linear-gradient(180deg,var(--accent-bright),var(--accent));
+    color:#fff; box-shadow:0 1px 0 rgba(255,255,255,0.2) inset, 0 8px 24px -8px var(--accent-glow);
+  }
+  .btn-primary .btn-chip{
+    width:42px; height:42px; margin:0; border-radius:14px;
+    background:#fff; color:var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; transition:transform 0.3s var(--ease);
+  }
+  .btn-primary .btn-chip svg{ margin:0; display:block; }
+  .btn-primary:hover{
+    transform:translateY(-2px); filter:brightness(1.08);
+    box-shadow:0 1px 0 rgba(255,255,255,0.25) inset, 0 12px 32px -6px var(--accent-glow);
+  }
+  .btn-primary:hover .btn-chip{ transform:translateX(3px); }
+  .btn-primary:active{ transform:translateY(0); }
+
+  .btn-ghost{
+    padding:16px 36px; border-radius:var(--radius-btn);
+    background:rgba(255,255,255,0.03); border:1px solid var(--line); color:var(--text-0);
+  }
+  .btn-ghost:hover{
+    background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.18); transform:translateY(-1px);
+  }
+
+  .btn-sm{ padding:4px 4px 4px 20px; font-size:12.5px; border-radius:14px; }
+  .btn-sm .btn-chip{ width:36px; height:36px; margin-left:14px; border-radius:11px; }
+  
+  .btn-block{ width:100%; }
+  .btn-block.btn-primary{ justify-content:center; padding-left: 6px; gap:12px; }
+  /* FIN BOTONES INTACTOS */
+
+  .navbar{
+    position:fixed; top:0; left:0; right:0; z-index:100; padding:18px 0;
+    transition:padding 0.35s var(--ease), background 0.35s var(--ease), border-color 0.35s var(--ease), backdrop-filter 0.35s var(--ease);
+    border-bottom:1px solid transparent;
+  }
+  .navbar.scrolled{
+    padding:12px 0; background:rgba(8,8,10,0.72);
+    backdrop-filter:blur(16px) saturate(160%); -webkit-backdrop-filter:blur(16px) saturate(160%);
+    border-bottom:1px solid var(--line);
+  }
+  .navbar .wrap{ display:flex; align-items:center; justify-content:space-between; }
+  .logo{ font-weight:800; font-size:14px; letter-spacing:-0.01em; display:flex; align-items:center; gap:8px; }
+  .logo-dot{ width:8px;height:8px;border-radius:2px; background:var(--accent-bright); box-shadow:0 0 10px var(--accent-glow); }
+  .nav-links{ display:flex; align-items:center; gap:36px; }
+  .nav-links a{ font-size:13.5px; color:var(--text-1); font-weight:500; transition:color 0.2s; position:relative; }
+  .nav-links a:hover{ color:var(--text-0); }
+  .nav-actions{ display:flex; align-items:center; gap:20px; }
+  .nav-cta{ padding:9px 18px; font-size:12px; }
+
+  .burger{
+    display:none; width:36px;height:36px;
+    align-items:center; justify-content:center; flex-direction:column; gap:5px;
+  }
+  .burger span{
+    width:20px; height:1.5px; background:var(--text-0);
+    transition:transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  }
+  .burger.active span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+  .burger.active span:nth-child(2){ opacity:0; }
+  .burger.active span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu{
+    position:fixed; inset:0; z-index:99; background:rgba(8,8,10,0.98);
+    backdrop-filter:blur(20px); display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:32px;
+    opacity:0; visibility:hidden; transition:opacity 0.35s var(--ease), visibility 0.35s;
+  }
+  .mobile-menu.open{ opacity:1; visibility:visible; }
+  .mobile-menu a{ font-size:20px; font-weight:600; color:var(--text-0); }
+  .mobile-menu .btn{ margin-top:12px; }
+
+  @media (max-width:900px){
+    .nav-links{ display:none; }
+    .nav-actions .nav-cta{ display:none; }
+    .burger{ display:flex; }
+  }
+
+  /* Ajustes estilo Micro1 en el Hero */
+  .hero{
+    position:relative; min-height:100vh; display:flex; align-items:center; padding:180px 0 100px;
+    background:
+      radial-gradient(ellipse 70% 50% at 78% 18%, rgba(62,123,250,0.16), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 10% 90%, rgba(62,123,250,0.06), transparent 60%),
+      var(--bg-0);
+  }
+  .hero-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:70px; align-items:center; }
+  
+  /* Fuentes enormes y limpias, forzado a máximo 2 líneas */
+  .hero-title{ font-size:clamp(42px, 6.5vw, 84px); margin:18px 0 28px; line-height: 1.05; font-weight: 800; letter-spacing:-0.03em; }
+  .hero-title .accent{
+    background:linear-gradient(180deg,var(--accent-bright),var(--accent));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-sub{ font-size:clamp(16px, 2.5vw, 22px); color:var(--text-1); line-height:1.5; max-width:640px; margin-bottom:48px; }
+
+  .price-block{ display:flex; align-items:flex-end; gap:14px; margin-bottom:16px; }
+  .price-value{ font-size:clamp(46px, 6vw, 64px); font-weight:800; letter-spacing:-0.03em; line-height:1; }
+  .price-meta{ color:var(--text-2); font-size:14px; padding-bottom:8px; }
+
+  .avail-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em;
+    color:#93c5fd; background:rgba(62,123,250,0.08); border:1px solid rgba(62,123,250,0.25);
+    padding:10px 20px; border-radius:10px; margin:22px 0 36px;
+  }
+  .avail-badge .pulse{
+    width:6px;height:6px;border-radius:50%; background:#34d399;
+    box-shadow:0 0 6px #34d399; animation:pulse 2s infinite;
+  }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
+
+  .hero-ctas{ display:flex; gap:24px; flex-wrap:wrap; margin-bottom:32px; }
+  .hero-micro{ color:var(--text-2); font-size:14px; line-height: 1.6; }
+  .hero-micro strong{ color:var(--text-1); font-weight:500; }
+
+  @media (max-width:980px){ 
+    .hero-grid{ grid-template-columns:1fr; gap:70px; } 
+    .hero{ padding-top:160px; } 
+    
+    .hero-grid > div:first-child {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .hero-sub { margin-left: auto; margin-right: auto; max-width: 90%; }
+    .price-block { justify-content: center; }
+    
+    .hero-ctas {
+      flex-direction: column;
+      width: auto;
+      max-width: 100%;
+      gap: 18px;
+      align-items: center;
+      margin: 16px auto 36px;
+    }
+    .hero-ctas .btn {
+      width: auto;
+      justify-content: center;
+    }
+    .hero-ctas .btn-ghost {
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+
+  /* Jerarquía y espaciado tipo micro1.ai en el hero mobile */
+  @media (max-width:768px){
+    .hero{ padding-top:140px; }
+    .eyebrow{ margin-bottom:28px; }
+    .hero-title{ font-size:clamp(38px, 10vw, 52px); margin:0 0 24px; }
+    .hero-sub{ font-size:17px; margin-bottom:40px; }
+    .price-block{ margin-bottom:20px; }
+    .avail-badge{ margin:20px 0 36px; }
+    .hero-ctas{ margin-bottom:36px; }
+  }
+
+  .hero-visual{ position:relative; height:520px; perspective:1200px; }
+  .float-card{
+    position:absolute; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border:1px solid var(--line); border-radius:12px; backdrop-filter:blur(10px);
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6); overflow:hidden; animation:drift 8s ease-in-out infinite;
+  }
+  @keyframes drift{
+    0%,100%{ transform:translateY(0) rotate(var(--r,0deg)); }
+    50%{ transform:translateY(-14px) rotate(var(--r,0deg)); }
+  }
+  .card-code{ width:340px; top:20px; right:40px; --r:-3deg; animation-delay:0s; }
+  .card-code .bar{ display:flex; gap:6px; padding:10px 14px; border-bottom:1px solid var(--line-soft); }
+  .dot{ width:8px;height:8px;border-radius:50%; }
+  .dot.r{ background:#ff5f57; } .dot.y{ background:#febc2e; } .dot.g{ background:#28c840; }
+  .card-code .body{ padding:16px; font-family:'JetBrains Mono',monospace; font-size:11.5px; line-height:1.9; color:var(--text-1); }
+  .card-code .body .k{ color:#93c5fd; } .card-code .body .s{ color:#86efac; } .card-code .body .m{ color:#6b6b76; }
+
+  .card-browser{ width:300px; bottom:60px; left:0; --r:2deg; animation-delay:1.2s; }
+  .card-browser .bar{ display:flex; align-items:center; gap:8px; padding:10px 14px; border-bottom:1px solid var(--line-soft); }
+  .card-browser .url{
+    flex:1; background:rgba(255,255,255,0.04); border-radius:6px;
+    padding:4px 10px; font-size:10px; color:var(--text-2); font-family:'JetBrains Mono',monospace;
+  }
+  .card-browser .body{ padding:18px; }
+  .browser-block{ height:8px; border-radius:4px; background:rgba(255,255,255,0.06); margin-bottom:9px; }
+  .browser-block.w60{ width:60%; } .browser-block.w80{ width:80%; } .browser-block.w40{ width:40%; }
+  .browser-block.accent{ background:var(--accent); height:26px; width:46%; border-radius:6px; margin-top:14px; }
+
+  .card-metric{ width:190px; top:250px; right:190px; --r:-2deg; animation-delay:2.4s; padding:18px; }
+  .card-metric .label{ font-size:10px; color:var(--text-2); font-family:'JetBrains Mono',monospace; letter-spacing:0.06em; text-transform:uppercase; }
+  .card-metric .val{ font-size:26px; font-weight:800; margin-top:6px; color:var(--text-0); }
+  .card-metric .spark{ display:flex; align-items:flex-end; gap:3px; height:24px; margin-top:10px; }
+  .card-metric .spark div{ flex:1; background:var(--accent); opacity:0.6; border-radius:1px; }
+
+  .glow-orb{
+    position:absolute; width:280px; height:280px; border-radius:50%;
+    background:radial-gradient(circle, var(--accent-glow), transparent 70%); filter:blur(20px);
+    top:40%; right:10%; z-index:-1; opacity:0.6;
+  }
+
+  @keyframes flotar{
+    0%{ transform:translateY(0) rotate(var(--r,0deg)); }
+    50%{ transform:translateY(-15px) rotate(var(--r,0deg)); }
+    100%{ transform:translateY(0) rotate(var(--r,0deg)); }
+  }
+  @media (min-width:769px){
+    .float-card{ animation:flotar 6s ease-in-out infinite; }
+    .card-code{ animation-delay:0s; }
+    .card-browser{ animation-delay:2.5s; }
+    .card-metric{ animation-delay:1.2s; }
+  }
+
+  @media (max-width:980px){
+    .hero-visual{ height:400px; }
+    .card-code{ width:260px; right:10px; top:0; }
+    .card-browser{ width:220px; left:0; bottom:20px; }
+    .card-metric{ width:150px; top:190px; right:120px; }
+  }
+  @media (max-width:560px){
+    .hero-visual{ height:340px; }
+    .card-code{ width:210px; right:0; top:0; }
+    .card-browser{ width:180px; left:0; bottom:0; }
+    .card-metric{ display:none; }
+  }
+
+  /* ---------- Section 2: process cards ---------- */
+  .bg-1{ background:var(--bg-1); }
+  .process-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
+    border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin-top:64px;
+  }
+  .process-card{ background:var(--bg-1); padding:40px 32px; transition:background 0.3s; position:relative; }
+  .process-card:hover{ background:var(--bg-2); }
+  .process-num{ font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent-bright); margin-bottom:28px; display:block; }
+  .process-card h3{ font-size:20px; font-weight:800; margin-bottom:14px; letter-spacing:-0.01em; }
+  .process-card p{ font-size:16px; color:var(--text-1); line-height:1.6; }
+  @media (max-width:900px){ .process-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px){ .process-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- Section 3: for who ---------- */
+  .whofor-list{ margin-top:64px; display:grid; grid-template-columns:1fr 1fr; gap:20px 48px; }
+  @media (max-width:700px){ .whofor-list{ grid-template-columns:1fr; } }
+  .whofor-item{ display:flex; align-items:flex-start; gap:18px; padding:22px 0; border-bottom:1px solid var(--line-soft); }
+  .whofor-check{
+    flex-shrink:0; width:26px;height:26px; border-radius:8px;
+    background:rgba(62,123,250,0.12); border:1px solid rgba(62,123,250,0.3);
+    display:flex; align-items:center; justify-content:center; margin-top:2px;
+  }
+  .whofor-check svg{ width:14px;height:14px; }
+  .whofor-item p{ font-size:17px; color:var(--text-1); line-height:1.5; }
+
+  .whofor-callout{
+    margin-top:72px; padding:48px; border:1px solid rgba(62,123,250,0.25);
+    border-radius:var(--radius); background:linear-gradient(135deg, rgba(62,123,250,0.08), rgba(62,123,250,0.02)); text-align:center;
+  }
+  .whofor-callout .l1{ font-size:22px; font-weight:800; color:var(--text-0); margin-bottom:10px; }
+  .whofor-callout .l2{ font-size:17px; color:var(--accent-bright); font-weight:600; }
+
+  /* ---------- Section 4: timeline ---------- */
+  .timeline{ margin-top:80px; display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
+  .timeline::before{ content:"absolute"; position:absolute; top:11px; left:0; right:0; height:1px; background:var(--line); }
+  .tl-step{ padding-right:32px; position:relative; }
+  .tl-dot{
+    width:22px;height:22px;border-radius:50%; background:var(--bg-1); border:2px solid var(--accent);
+    margin-bottom:28px; position:relative; z-index:2; box-shadow:0 0 0 8px var(--bg-1);
+  }
+  .tl-time{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent-bright); letter-spacing:0.04em; margin-bottom:14px; }
+  .tl-step h3{ font-size:18px; font-weight:800; margin-bottom:12px; }
+  .tl-step p{ font-size:15px; color:var(--text-1); line-height:1.6; }
+
+  @media (max-width:820px){
+    .timeline{ grid-template-columns:1fr; gap:40px; }
+    .timeline::before{ top:0; bottom:0; left:11px; right:auto; width:1px; height:auto; }
+    .tl-step{ padding-left:42px; padding-right:0; }
+    .tl-dot{ position:absolute; left:0; top:2px; margin-bottom:0; box-shadow:0 0 0 8px var(--bg-1); }
+  }
+
+  /* ---------- Section 5: tools ---------- */
+  .tools-row{ display:flex; flex-wrap:wrap; gap:16px; margin-top:56px; }
+  .tool-chip{
+    padding:18px 32px; border:1px solid var(--line); border-radius:12px;
+    font-family:'JetBrains Mono',monospace; font-size:16px; font-weight:500;
+    color:var(--text-1); background:var(--bg-2); transition:border-color 0.25s, color 0.25s, transform 0.25s;
+  }
+  .tool-chip:hover{ border-color:rgba(62,123,250,0.4); color:var(--text-0); transform:translateY(-2px); }
+
+  /* ---------- Section 7: offer ---------- */
+  .offer-section{ position:relative; background:radial-gradient(ellipse 60% 60% at 50% 0%, rgba(62,123,250,0.14), transparent 65%), var(--bg-1); text-align:center; }
+  .offer-title{ font-size:clamp(38px,6vw,64px); margin:24px auto 40px; max-width:800px; }
+  .offer-price{
+    font-size:clamp(72px,12vw,110px); font-weight:800; letter-spacing:-0.03em;
+    background:linear-gradient(180deg,#fff,#93c5fd); -webkit-background-clip:text; background-clip:text; color:transparent;
+    line-height:1; margin:16px 0 12px;
+  }
+  .offer-price-meta{ color:var(--text-2); font-size:16px; margin-bottom:48px; }
+
+  .offer-list{ display:flex; flex-wrap:wrap; justify-content:center; gap:16px 36px; max-width:700px; margin:0 auto 56px; }
+  .offer-list li{ list-style:none; display:flex; align-items:center; gap:12px; font-size:17px; color:var(--text-1); }
+  .offer-list svg{ flex-shrink:0; width: 18px; height: 18px; }
+
+  .offer-badge-row{ display:flex; flex-direction:column; align-items:center; gap:14px; margin-top:40px; }
+  .offer-fine{ color:var(--text-2); font-size:14px; max-width:440px; margin:24px auto 0; line-height: 1.5; }
+
+  /* ---------- Section 8: booking ---------- */
+  .booking-bg{ position:relative; background:radial-gradient(ellipse 60% 50% at 50% 0%, rgba(62,123,250,0.14), transparent 65%), var(--bg-1); }
+  
+  .tz-selector-wrap {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    margin: 40px auto 0;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    max-width: 480px;
+  }
+  .tz-selector-wrap label { font-size: 15px; color: var(--text-1); font-weight: 500; }
+  .tz-selector-wrap select {
+    background: var(--bg-0);
+    border: 1px solid var(--glass-border);
+    color: var(--text-0);
+    padding: 10px 40px 10px 14px; 
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+    cursor: pointer;
+    flex: 1;
+    transition: border-color 0.2s;
+    appearance: none; 
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239aa3b5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+  }
+  .tz-selector-wrap select:focus { border-color: var(--accent); }
+  .tz-selector-wrap select option { background: var(--bg-1); color: var(--text-0); }
+
+
+  .calendar-wrap{ 
+    position: relative; 
+    max-width: 480px; 
+    width: 100%; 
+    margin: 32px auto 0; 
+    transition: z-index 0s;
+  }
+  
+  .calendar-wrap.modal-active { z-index: 301; }
+
+  .calendar-widget{
+    position: relative;
+    border: 1px solid var(--glass-border); 
+    border-radius: 20px; 
+    padding: 32px;
+    background: var(--glass-bg); 
+    backdrop-filter: blur(20px) saturate(140%); 
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    box-shadow: 0 1px 0 var(--glass-highlight) inset, 0 30px 60px -30px rgba(0,0,0,0.55);
+    transition: opacity 0.35s var(--ease), visibility 0.35s;
+  }
+
+  .calendar-wrap.modal-active .calendar-widget {
+    position: absolute;
+    top: 0; left: 0; width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .cal-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; }
+  .cal-month{ font-weight:700; font-size:17px; letter-spacing:-0.01em; text-transform:capitalize; color:var(--text-0); }
+  .cal-nav{
+    width:38px; height:38px; border-radius:11px; border:1px solid var(--glass-border); background:rgba(255,255,255,0.03);
+    color:var(--text-1); display:flex; align-items:center; justify-content:center; transition:border-color 0.2s, color 0.2s, opacity 0.2s;
+  }
+  .cal-nav:hover{ border-color:rgba(62,123,250,0.5); color:var(--text-0); }
+  .cal-nav:disabled{ opacity:0.3; pointer-events:none; }
+  .cal-weekdays{ display:grid; grid-template-columns:repeat(7,1fr); margin-bottom:12px; }
+  .cal-weekdays span{ text-align:center; font-size:12px; color:var(--text-2); font-family:'JetBrains Mono',monospace; letter-spacing:0.03em; }
+  .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+  .cal-day{
+    aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+    border-radius:12px; font-size:14px; font-weight:500; color:var(--text-2); border:1px solid transparent;
+  }
+  .cal-day.empty{ visibility:hidden; }
+  .cal-day.available{
+    color:var(--text-0); font-weight:600; cursor:pointer; background:rgba(255,255,255,0.03);
+    transition:border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+  .cal-day.available:hover{ border-color:rgba(62,123,250,0.5); background:rgba(62,123,250,0.08); transform:translateY(-1px); }
+  .cal-day.available .cal-dot{ width:4px; height:4px; border-radius:50%; background:var(--accent-bright); }
+  .cal-day.selected{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .cal-day.selected .cal-dot{ background:#fff; }
+  .cal-day.disabled{ opacity:0.28; font-weight:400; }
+  .cal-legend{ display:flex; align-items:center; gap:10px; margin-top:24px; font-size:13px; color:var(--text-2); }
+  .cal-legend-dot{ width:6px; height:6px; border-radius:50%; background:var(--accent-bright); }
+
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:14px; color:var(--text-1); margin-bottom:8px; font-weight:500; }
+  .field input, .field textarea{
+    width:100%; background:rgba(255,255,255,0.03); border:1px solid var(--glass-border); border-radius:11px;
+    padding:13px 16px; color:var(--text-0); font-family:inherit; font-size:15px; transition:border-color 0.2s, background 0.2s;
+  }
+  .field input:focus, .field textarea:focus{ outline:none; border-color:var(--accent); background:var(--bg-0); }
+  .field textarea{ resize:vertical; min-height:90px; }
+
+  
+  .modal-overlay{
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 300; 
+    background: rgba(4,6,10,0.85); 
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    opacity: 0; visibility: hidden; 
+    transition: opacity 0.3s var(--ease), visibility 0.3s;
+  }
+  .modal-overlay.open{ opacity: 1; visibility: visible; }
+
+  .modal-box {
+    position: absolute; 
+    top: 0; left: 0; 
+    width: 100%; 
+    max-height: 85dvh;
+    
+    display: flex; flex-direction: column;
+    background: var(--glass-bg); 
+    backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border: 1px solid var(--glass-border); 
+    border-radius: 20px; 
+    padding: 32px; 
+    
+    box-sizing: border-box; 
+    overflow: hidden; 
+    box-shadow: 0 40px 100px -24px rgba(0,0,0,0.65), 0 1px 0 var(--glass-highlight) inset;
+    
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateY(18px) scale(0.97); 
+    transition: all 0.35s var(--ease);
+  }
+  
+  .calendar-wrap.modal-active .modal-box { 
+    position: relative; 
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: translateY(0) scale(1); 
+  }
+
+  .modal-close{
+    position:absolute; top:24px; right:24px; width:34px; height:34px; border-radius:10px;
+    border:1px solid var(--glass-border); background:rgba(255,255,255,0.04); color:var(--text-1);
+    display:flex; align-items:center; justify-content:center; transition:border-color 0.2s, color 0.2s, transform 0.25s;
+    flex-shrink:0; z-index:10;
+  }
+  .modal-close:hover{ border-color:rgba(62,123,250,0.4); color:var(--text-0); transform:rotate(90deg); }
+
+  .modal-step{
+    display:flex; flex-direction:column; flex:1; overflow-y:auto; overflow-x:hidden; padding-right:8px;
+    animation:modalStepIn 0.35s var(--ease);
+  }
+  .modal-step[hidden] {
+    display: none !important;
+  }
+
+  .modal-step::-webkit-scrollbar { width: 6px; }
+  .modal-step::-webkit-scrollbar-track { background: transparent; }
+  .modal-step::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 6px; }
+
+  @keyframes modalStepIn{ from{ opacity:0; transform:translateX(10px); } to{ opacity:1; transform:translateX(0); } }
+
+  .modal-eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--accent-bright); font-weight:600; margin-bottom:12px;
+  }
+  .modal-title{ font-size:22px; font-weight:800; margin-bottom:10px; padding-right:32px; text-transform:capitalize; letter-spacing:-0.015em; line-height:1.2; word-wrap:break-word; }
+  .modal-sub{ font-size:14px; color:var(--text-2); line-height:1.6; margin-bottom:24px; }
+
+  .modal-back{
+    display:inline-flex; align-items:center; gap:6px; font-size:14px; color:var(--text-2); font-weight:500;
+    margin-bottom:18px; transition:color 0.2s;
+  }
+  .modal-back:hover{ color:var(--text-0); }
+
+  .modal-time-list{ display:flex; flex-direction:column; gap:12px; width: 100%; }
+  .modal-time-option{
+    display:flex; align-items:center; justify-content:space-between; width:100%; box-sizing:border-box;
+    padding:14px 18px; border:1px solid var(--glass-border); border-radius:12px;
+    background:rgba(255,255,255,0.03); font-family:'JetBrains Mono',monospace; font-size:15px;
+    font-weight:600; color:var(--text-0); transition:border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+  .modal-time-option:hover{ border-color:rgba(62,123,250,0.55); background:rgba(62,123,250,0.08); transform:translateY(-1px); }
+  .modal-time-option .arrow{ color:var(--accent-bright); }
+
+  .modal-summary{
+    font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent-bright); background:rgba(62,123,250,0.1);
+    border:1px solid rgba(62,123,250,0.25); border-radius:12px; padding:16px; margin-bottom:24px; line-height:1.6;
+  }
+
+  .modal-success{ text-align:center; padding:14px 0 10px; justify-content: center; }
+  .modal-success-icon{
+    width:64px; height:64px; border-radius:50%; background:rgba(62,123,250,0.12); border:1px solid rgba(62,123,250,0.3);
+    display:flex; align-items:center; justify-content:center; color:var(--accent-bright); margin:0 auto 24px;
+    animation:successPop 0.5s var(--ease);
+  }
+  @keyframes successPop{ 0%{ transform:scale(0.6); opacity:0; } 70%{ transform:scale(1.08); opacity:1; } 100%{ transform:scale(1); } }
+  .modal-success .modal-title{ padding-right:0; }
+
+  /* ---------- FAQ ---------- */
+  .faq-list{ margin-top:64px; max-width:820px; }
+  .faq-item{ border-bottom:1px solid var(--line-soft); }
+  .faq-q{
+    width:100%; display:flex; align-items:center; justify-content:space-between; padding:32px 8px;
+    font-size:18px; font-weight:600; text-align:left; color:var(--text-0);
+  }
+  .faq-icon{ width:24px;height:24px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:var(--accent-bright); transition:transform 0.3s var(--ease); }
+  .faq-item.open .faq-icon{ transform:rotate(45deg); }
+  .faq-a{ max-height:0; overflow:hidden; transition:max-height 0.4s var(--ease), padding 0.4s var(--ease); color:var(--text-1); font-size:16px; line-height:1.7; padding:0 8px; }
+  .faq-item.open .faq-a{ max-height:240px; padding-bottom:32px; }
+
+  .final-cta{ text-align:center; background:var(--bg-0); position:relative; }
+  .final-cta::before{
+    content:""; position:absolute; top:0; left:50%; transform:translateX(-50%); width:600px; height:600px;
+    background:radial-gradient(circle, var(--accent-glow), transparent 70%); filter:blur(50px); opacity:0.4; pointer-events:none;
+  }
+  .final-title{ font-size:clamp(36px,5.5vw,56px); margin:24px 0 32px; position:relative; }
+  .final-lines{ font-size:18px; color:var(--text-1); line-height:1.8; margin-bottom:48px; position:relative; }
+  .final-lines strong{ color:var(--text-0); }
+
+  footer{ border-top:1px solid var(--line); padding:72px 0 48px; background:var(--bg-1); }
+  .footer-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:48px; flex-wrap:wrap; margin-bottom:48px; }
+  .footer-brand p{ color:var(--text-2); font-size:15px; max-width:400px; margin-top:16px; line-height:1.6; }
+  .footer-bottom{ border-top:1px solid var(--line-soft); padding-top:32px; color:var(--text-2); font-size:14px; }
+
+  /* ---------- Intro / splash screen ---------- */
+  .intro-screen{
+    position:fixed; inset:0; z-index:9999;
+    background:#05070c; 
+    display:flex; align-items:center; justify-content:center;
+    transition:opacity 0.5s ease, visibility 0.5s ease;
+  }
+  .intro-text-wrap{ position:relative; overflow:hidden; display:inline-block; }
+  .intro-text{
+    display:inline-block;
+    font-family:'Outfit',sans-serif; 
+    font-weight:900;
+    font-size:clamp(60px, 15vw, 130px);
+    letter-spacing:0.08em;
+    background:linear-gradient(135deg, #a0a0a0 20%, #ffffff 50%, #a0a0a0 80%);
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    opacity:0;
+    filter:blur(12px);
+    animation: splashFadeIn 2s cubic-bezier(0.4, 0, 0.2, 1) forwards, textShineEffect 2s linear forwards;
+  }
+  
+  @keyframes splashFadeIn{
+    0% { opacity: 0; filter: blur(12px); transform: scale(0.95); }
+    20% { opacity: 1; filter: blur(0px); transform: scale(1); }
+    80% { opacity: 1; filter: blur(0px); transform: scale(1); }
+    100% { opacity: 0; filter: blur(8px); transform: scale(1.05); }
+  }
+  @keyframes textShineEffect{
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .intro-screen, .intro-text { animation:none; opacity:0; display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= INTRO / SPLASH ================= -->
+<div class="intro-screen" id="introScreen" aria-hidden="true">
+  <div class="intro-text-wrap">
+    <span class="intro-text">CODE</span>
+  </div>
+</div>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar" id="navbar">
+  <div class="wrap">
+    <a href="#top" class="logo">WEB CON IA</a>
+    <div class="nav-links">
+      <a href="#incluye">Qué incluye</a>
+      <a href="#funciona">Cómo funciona</a>
+      <a href="#preguntas">Preguntas</a>
+    </div>
+    <div class="nav-actions">
+      <a href="#reserva" class="btn btn-primary btn-sm nav-cta"><span>RESERVAR MI ASESORÍA</span><span class="btn-chip"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#incluye" class="mm-link">Qué incluye</a>
+  <a href="#funciona" class="mm-link">Cómo funciona</a>
+  <a href="#preguntas" class="mm-link">Preguntas</a>
+  <a href="#reserva" class="btn btn-primary mm-link"><span>RESERVAR MI ASESORÍA</span><span class="btn-chip"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+</div>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow reveal in">Asesoría 1 a 1</span>
+      
+      <!-- H1 ajustado para cumplir regla estricta de max 2 líneas -->
+      <h1 class="hero-title reveal in">CONVERTÍ TU IDEA EN<br><span class="accent">UNA WEB CON IA.</span></h1>
+      
+      <!-- Subtítulo ajustado para cumplir regla estricta de max 2 líneas -->
+      <p class="hero-sub reveal in">Sesión privada de 90 min para pasar de una<br>idea a una <strong>web funcional</strong> y profesional.</p>
+
+      <div class="price-block reveal in">
+        <span class="price-value">USD 35</span>
+        <span class="price-meta">90 min · En vivo</span>
+      </div>
+
+      <div class="avail-badge reveal in"><span class="pulse"></span>20 LUGARES DISPONIBLES</div>
+
+      <div class="hero-ctas reveal in">
+        <a href="#reserva" class="btn btn-primary">
+          <span>RESERVAR MI ASESORÍA</span>
+          <span class="btn-chip"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <a href="#incluye" class="btn btn-ghost">VER QUÉ INCLUYE ↓</a>
+      </div>
+      
+      <!-- Micro copy reducido a 1 sola línea -->
+      <p class="hero-micro reveal in"><strong>Trabajamos directamente sobre tu propio proyecto.</strong></p>
+    </div>
+
+    <div class="hero-visual reveal in">
+      <div class="glow-orb"></div>
+      <div class="float-card card-code">
+        <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+        <div class="body">
+          <div><span class="m">// tu-proyecto.jsx</span></div>
+          <div><span class="k">const</span> proyecto = {</div>
+          <div>&nbsp;&nbsp;idea: <span class="s">"tu idea"</span>,</div>
+          <div>&nbsp;&nbsp;stack: <span class="s">"IA + código"</span>,</div>
+          <div>&nbsp;&nbsp;estado: <span class="s">"en construcción"</span></div>
+          <div>};</div>
+          <div><span class="m">// listo para deploy →</span></div>
+        </div>
+      </div>
+      <div class="float-card card-browser">
+        <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="url">tu-proyecto.com</span></div>
+        <div class="body">
+          <div class="browser-block w60"></div>
+          <div class="browser-block w80"></div>
+          <div class="browser-block w40"></div>
+          <div class="browser-block accent"></div>
+        </div>
+      </div>
+      <div class="float-card card-metric">
+        <div class="label">Deploy status</div>
+        <div class="val">Live</div>
+        <div class="spark">
+          <div style="height:30%"></div><div style="height:55%"></div><div style="height:40%"></div>
+          <div style="height:80%"></div><div style="height:60%"></div><div style="height:95%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= SECCIÓN 2 ================= -->
+<section class="section-pad bg-1" id="incluye">
+  <div class="divider-fade"></div>
+  <div class="wrap">
+    <h2 class="section-title reveal">TRABAJAMOS SOBRE<br>TU PROPIO PROYECTO.</h2>
+    <p class="section-sub reveal">Esto no es una clase teórica. Nos enfocamos directamente en <strong>lo que vos querés construir</strong>.</p>
+
+    <div class="process-grid reveal">
+      <div class="process-card">
+        <span class="process-num">01</span>
+        <h3>Definimos tu idea</h3>
+        <p>Le damos estructura y claridad a lo que querés crear.</p>
+      </div>
+      <div class="process-card">
+        <span class="process-num">02</span>
+        <h3>Elegimos el camino</h3>
+        <p>Seleccionamos herramientas y estrategia según tu proyecto.</p>
+      </div>
+      <div class="process-card">
+        <span class="process-num">03</span>
+        <h3>Construimos juntos</h3>
+        <p>Generamos, revisamos, corregimos e iteramos en tiempo real.</p>
+      </div>
+      <div class="process-card">
+        <span class="process-num">04</span>
+        <h3>Te llevás un camino claro</h3>
+        <p>Terminás la sesión sabiendo exactamente qué hacer después.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN 3 ================= -->
+<section class="section-pad">
+  <div class="wrap">
+    <span class="eyebrow reveal">¿Para quién es?</span>
+    <h2 class="section-title reveal" style="margin-top:24px;">Esta asesoría es para vos si...</h2>
+
+    <div class="whofor-list reveal">
+      <div class="whofor-item">
+        <span class="whofor-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>Tenés una idea pero no sabés por dónde empezar.</p>
+      </div>
+      <div class="whofor-item">
+        <span class="whofor-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>Querés aprender a desarrollar utilizando IA.</p>
+      </div>
+      <div class="whofor-item">
+        <span class="whofor-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>Ya empezaste una web y estás trabado.</p>
+      </div>
+      <div class="whofor-item">
+        <span class="whofor-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>Querés mejorar el diseño o funcionamiento de una página.</p>
+      </div>
+      <div class="whofor-item">
+        <span class="whofor-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>Querés aprender haciendo, sobre un proyecto real.</p>
+      </div>
+      <div class="whofor-item">
+        <span class="whofor-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>No sabés programar o tenés conocimientos básicos.</p>
+      </div>
+    </div>
+
+    <div class="whofor-callout reveal">
+      <div class="l1">No necesitás llegar sabiendo exactamente qué hacer.</div>
+      <div class="l2">Para eso es la sesión.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN 4 ================= -->
+<section class="section-pad bg-1" id="funciona">
+  <div class="divider-fade"></div>
+  <div class="wrap">
+    <h2 class="section-title reveal">90 MINUTOS.<br>TU PROYECTO.<br>SIN VUELTAS.</h2>
+
+    <div class="timeline reveal">
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-time">00 — 15 MIN</div>
+        <h3>Entendemos tu idea</h3>
+        <p>Qué querés construir, para quién y qué necesitás.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-time">15 — 30 MIN</div>
+        <h3>Definimos el camino</h3>
+        <p>Herramientas, estructura y estrategia.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-time">30 — 75 MIN</div>
+        <h3>Construimos juntos</h3>
+        <p>Trabajamos directamente sobre tu proyecto.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-time">75 — 90 MIN</div>
+        <h3>Próximos pasos</h3>
+        <p>Qué mejorar, qué falta y cómo continuar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN 5 ================= -->
+<section class="section-pad">
+  <div class="wrap">
+    <h2 class="section-title reveal">LAS HERRAMIENTAS<br>SON SOLO EL MEDIO.</h2>
+    <p class="section-sub reveal">No importa cuál uses. Importa <strong>saber usarla</strong> para conseguir un resultado.</p>
+
+    <div class="tools-row reveal">
+      <span class="tool-chip">Claude</span>
+      <span class="tool-chip">ChatGPT</span>
+      <span class="tool-chip">Gemini</span>
+      <span class="tool-chip">Kimi</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN 7: OFERTA ================= -->
+<section class="section-pad offer-section">
+  <div class="divider-fade"></div>
+  <div class="wrap">
+    <span class="eyebrow reveal">Asesoría personalizada · 1 a 1</span>
+    <h2 class="offer-title reveal">TU PROYECTO.<br>UNA HORA Y MEDIA.<br>CONMIGO.</h2>
+
+    <div class="offer-price reveal">USD 35</div>
+    <p class="offer-price-meta reveal">Pago único · sin suscripciones</p>
+
+    <ul class="offer-list reveal">
+      <li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>90 minutos en vivo</li>
+      <li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Trabajo directo sobre tu proyecto</li>
+      <li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Estrategia + IA + desarrollo</li>
+      <li><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Próximos pasos claros</li>
+    </ul>
+
+    <div class="offer-badge-row reveal">
+      <a href="#reserva" class="btn btn-primary"><span>RESERVAR MI LUGAR</span><span class="btn-chip"><svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <span class="avail-badge"><span class="pulse"></span>SOLO 20 LUGARES</span>
+      <p class="hero-micro">2 personas por día · durante 10 días</p>
+    </div>
+
+    <p class="offer-fine reveal">Una vez completados los 20 lugares, cierro esta primera tanda.</p>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN 8: RESERVA ================= -->
+<section class="section-pad booking-bg" id="reserva">
+  <div class="wrap">
+    <span class="eyebrow reveal">Reservá tu horario</span>
+    <h2 class="section-title reveal" style="margin-top:24px;">ELEGÍ TU HORARIO</h2>
+    <p class="section-sub reveal">Elegí el país para ver la disponibilidad en tu hora local. Luego tocá un día para reservar. Todo se confirma por WhatsApp.</p>
+
+    <!-- Selector Dinámico de Zona Horaria -->
+    <div class="tz-selector-wrap reveal">
+      <label for="tzSelect">País:</label>
+      <select id="tzSelect">
+        <option value="0">🇦🇷 Argentina (Horario Base)</option>
+        <option value="-2">🇨🇴 Colombia / 🇵🇪 Perú</option>
+        <option value="-1">🇨🇱 Chile</option>
+        <option value="5">🇪🇸 España (Península)</option>
+        <option value="-3">🇲🇽 México (CDMX)</option>
+        <option value="-1">🇺🇸 Estados Unidos (EST)</option>
+      </select>
+    </div>
+
+    <div class="calendar-wrap reveal" id="calendarWrap">
+      
+      <div class="calendar-widget" id="calendarWidget">
+        <div class="cal-header">
+          <button type="button" class="cal-nav" id="calPrev" aria-label="Mes anterior">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="cal-month" id="calMonthLabel">—</div>
+          <button type="button" class="cal-nav" id="calNext" aria-label="Mes siguiente">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="cal-weekdays">
+          <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-legend"><span class="cal-legend-dot"></span>Días con disponibilidad</div>
+      </div>
+
+      <!-- ================= CAJA DEL MODAL ================= -->
+      <div class="modal-box" id="bookingModalBox">
+        <button type="button" class="modal-close" id="modalCloseBtn" aria-label="Cerrar">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2 2l11 11M13 2L2 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+
+        <div class="modal-step" id="stepTimes">
+          <div class="modal-eyebrow">Paso 1 de 2</div>
+          <h3 class="modal-title" id="modalDayTitle">—</h3>
+          <p class="modal-sub" id="modalTimeSub">Elegí el horario que mejor te quede.</p>
+          <div class="modal-time-list" id="modalTimeList"></div>
+        </div>
+
+        <div class="modal-step" id="stepContact" hidden>
+          <button type="button" class="modal-back" id="modalBackBtn">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M7.5 2.5L3 6l4.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Volver
+          </button>
+          <div class="modal-eyebrow">Paso 2 de 2</div>
+          <h3 class="modal-title">Tus datos</h3>
+          <div class="modal-summary" id="modalSummary">—</div>
+          <form id="contactForm">
+            <div class="field">
+              <label for="m-name">Nombre</label>
+              <input type="text" id="m-name" required placeholder="Tu nombre">
+            </div>
+            <div class="field">
+              <label for="m-email">Email</label>
+              <input type="email" id="m-email" required placeholder="tu@email.com">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              <span>CONFIRMAR POR WHATSAPP</span>
+              <span class="btn-chip"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+          </form>
+        </div>
+
+        <div class="modal-step modal-success" id="stepSuccess" hidden>
+          <div class="modal-success-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="modal-title">¡Listo!</h3>
+          <p class="modal-sub">Se abrió WhatsApp con tu reserva armada. Enviá el mensaje para confirmar tu turno.</p>
+          <button type="button" class="btn btn-ghost btn-block" id="modalDoneBtn">Cerrar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN 9: FAQ ================= -->
+<section class="section-pad bg-1" id="preguntas">
+  <div class="divider-fade"></div>
+  <div class="wrap">
+    <h2 class="section-title reveal">PREGUNTAS FRECUENTES</h2>
+
+    <div class="faq-list reveal" id="faqList">
+      <div class="faq-item">
+        <button class="faq-q">¿Necesito saber programar?<span class="faq-icon">+</span></button>
+        <div class="faq-a">No. La sesión se adapta a tu nivel y a tu proyecto.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Puedo llevar una web que ya empecé?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Sí. Podemos trabajar sobre una web existente o comenzar desde cero.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Puedo ir con una idea que todavía no está definida?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Sí. Podemos estructurarla juntos durante la sesión.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Qué herramientas vamos a utilizar?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Depende del proyecto. Podemos trabajar con diferentes herramientas de IA según lo que necesites.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿La asesoría es una clase?<span class="faq-icon">+</span></button>
+        <div class="faq-a">No exactamente. Es una sesión práctica 1 a 1 enfocada directamente en tu proyecto.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN FINAL ================= -->
+<section class="section-pad final-cta">
+  <div class="divider-fade"></div>
+  <div class="wrap">
+    <span class="eyebrow reveal">Asesoría personalizada · 1 a 1</span>
+    <h2 class="final-title reveal">¿LISTO PARA CONSTRUIR TU PROYECTO?</h2>
+    <p class="final-lines reveal"><strong>20 lugares.</strong><br><strong>USD 35.</strong><br><strong>90 minutos 1 a 1.</strong></p>
+    <a href="#reserva" class="btn btn-primary reveal" style="position:relative;"><span>RESERVAR MI ASESORÍA</span><span class="btn-chip"><svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    <p class="hero-micro reveal" style="margin-top:28px;">2 personas por día · durante 10 días</p>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><span class="logo-dot"></span>WEB CON IA</div>
+        <p>Asesorías 1 a 1 para crear y desarrollar proyectos utilizando inteligencia artificial.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 WEB CON IA</div>
+  </div>
+</footer>
+
+<!-- ================= OVERLAY OSCURO ================= -->
+<div class="modal-overlay" id="bookingModalOverlay"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Intro / splash screen ---------- */
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const splash = document.getElementById('introScreen');
+      if(splash){
+        splash.style.opacity = '0';
+        splash.style.visibility = 'hidden';
+        setTimeout(() => splash.remove(), 500);
+      }
+    }, 2000); 
+  });
+
+  const CONFIG = {
+    PRICE: 35,
+    CURRENCY: "USD",
+    TOTAL_SLOTS: 20,
+    SLOTS_PER_DAY: 2,
+    DURATION: 90,
+    ENABLED_WEEKDAYS: [2, 3, 4, 5],
+    AVAILABLE_TIMES: ["18:00", "19:30"],
+    MONTHS_AHEAD: 2,
+    WHATSAPP_NUMBER: "5492804000000"
+  };
+
+  const navbar = document.getElementById('navbar');
+  function onScroll(){
+    if(window.scrollY > 20){ navbar.classList.add('scrolled'); }
+    else{ navbar.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', function(){
+    burger.classList.toggle('active');
+    mobileMenu.classList.toggle('open');
+  });
+  document.querySelectorAll('.mm-link').forEach(function(el){
+    el.addEventListener('click', function(){
+      burger.classList.remove('active');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(function(el){ io.observe(el); });
+
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    const q = item.querySelector('.faq-q');
+    q.addEventListener('click', function(){
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
+      if(!wasOpen){ item.classList.add('open'); }
+    });
+  });
+
+  const calGrid = document.getElementById('calGrid');
+  const calMonthLabel = document.getElementById('calMonthLabel');
+  const calPrev = document.getElementById('calPrev');
+  const calNext = document.getElementById('calNext');
+  const tzSelect = document.getElementById('tzSelect');
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  let viewYear = today.getFullYear();
+  let viewMonth = today.getMonth();
+  const maxDate = new Date(today.getFullYear(), today.getMonth() + CONFIG.MONTHS_AHEAD, 1);
+
+  let selectedDate = null;
+  let selectedTime = null;
+  let selectedCountryText = null;
+
+  function isDayAvailable(date){
+    if(date < today) return false;
+    return CONFIG.ENABLED_WEEKDAYS.indexOf(date.getDay()) !== -1;
+  }
+
+  function formatMonthLabel(year, month){
+    const d = new Date(year, month, 1);
+    return d.toLocaleDateString('es-AR', { month: 'long', year: 'numeric' });
+  }
+
+  function formatSelectedDate(date){
+    return date.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' });
+  }
+
+  function renderCalendar(){
+    calGrid.innerHTML = '';
+    calMonthLabel.textContent = formatMonthLabel(viewYear, viewMonth);
+
+    const firstDay = new Date(viewYear, viewMonth, 1);
+    const startOffset = firstDay.getDay();
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+    for(let i = 0; i < startOffset; i++){
+      const empty = document.createElement('div');
+      empty.className = 'cal-day empty';
+      calGrid.appendChild(empty);
+    }
+
+    for(let day = 1; day <= daysInMonth; day++){
+      const date = new Date(viewYear, viewMonth, day);
+      const cell = document.createElement('div');
+      cell.textContent = day;
+
+      if(isDayAvailable(date)){
+        cell.className = 'cal-day available';
+        const dot = document.createElement('span');
+        dot.className = 'cal-dot';
+        cell.appendChild(dot);
+
+        cell.addEventListener('click', function(){
+          selectedDate = date;
+          selectedTime = null;
+          openTimesStep();
+        });
+      } else {
+        cell.className = 'cal-day disabled';
+      }
+
+      calGrid.appendChild(cell);
+    }
+
+    const isAtCurrentMonth = (viewYear === today.getFullYear() && viewMonth === today.getMonth());
+    const nextMonthDate = new Date(viewYear, viewMonth + 1, 1);
+    calPrev.disabled = isAtCurrentMonth;
+    calNext.disabled = nextMonthDate >= maxDate;
+  }
+
+  calPrev.addEventListener('click', function(){
+    viewMonth -= 1;
+    if(viewMonth < 0){ viewMonth = 11; viewYear -= 1; }
+    renderCalendar();
+  });
+  calNext.addEventListener('click', function(){
+    viewMonth += 1;
+    if(viewMonth > 11){ viewMonth = 0; viewYear += 1; }
+    renderCalendar();
+  });
+
+  renderCalendar();
+
+  const bookingModalOverlay = document.getElementById('bookingModalOverlay');
+  const calendarWrap = document.getElementById('calendarWrap');
+  
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  const modalBackBtn = document.getElementById('modalBackBtn');
+  const modalDoneBtn = document.getElementById('modalDoneBtn');
+  
+  const modalDayTitle = document.getElementById('modalDayTitle');
+  const modalTimeSub = document.getElementById('modalTimeSub');
+  const modalTimeList = document.getElementById('modalTimeList');
+  const modalSummary = document.getElementById('modalSummary');
+  const stepTimes = document.getElementById('stepTimes');
+  const stepContact = document.getElementById('stepContact');
+  const stepSuccess = document.getElementById('stepSuccess');
+  const contactForm = document.getElementById('contactForm');
+
+  function showStep(step){
+    [stepTimes, stepContact, stepSuccess].forEach(function(el){ el.hidden = true; });
+    step.hidden = false;
+  }
+
+  function openModal(){
+    bookingModalOverlay.classList.add('open');
+    calendarWrap.classList.add('modal-active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(){
+    bookingModalOverlay.classList.remove('open');
+    calendarWrap.classList.remove('modal-active');
+    document.body.style.overflow = '';
+  }
+
+  function convertTimeByOffset(timeStr, offsetHours) {
+    let [h, m] = timeStr.split(':').map(Number);
+    h += offsetHours;
+    if (h >= 24) h -= 24;
+    if (h < 0) h += 24;
+    return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+  }
+
+  function openTimesStep(){
+    modalDayTitle.textContent = formatSelectedDate(selectedDate);
+    modalTimeList.innerHTML = '';
+    
+    const tzOffset = parseInt(tzSelect.value, 10);
+    selectedCountryText = tzSelect.options[tzSelect.selectedIndex].text.split(' ')[1]; 
+
+    modalTimeSub.textContent = 'Horarios mostrados para: ' + selectedCountryText;
+
+    CONFIG.AVAILABLE_TIMES.forEach(function(t){
+      const convertedTime = convertTimeByOffset(t, tzOffset);
+      
+      const option = document.createElement('button');
+      option.type = 'button';
+      option.className = 'modal-time-option';
+      option.innerHTML = '<span>' + convertedTime + ' hs</span><span class="arrow">→</span>';
+      option.addEventListener('click', function(){
+        selectedTime = convertedTime; 
+        openContactStep();
+      });
+      modalTimeList.appendChild(option);
+    });
+
+    showStep(stepTimes);
+    openModal();
+  }
+
+  function openContactStep(){
+    modalSummary.textContent = formatSelectedDate(selectedDate) + ' · ' + selectedTime + ' hs (' + selectedCountryText + ') · ' + CONFIG.DURATION + ' min · ' + CONFIG.CURRENCY + ' ' + CONFIG.PRICE;
+    showStep(stepContact);
+  }
+
+  modalBackBtn.addEventListener('click', function(){
+    showStep(stepTimes);
+  });
+
+  modalCloseBtn.addEventListener('click', closeModal);
+  modalDoneBtn.addEventListener('click', closeModal);
+  bookingModalOverlay.addEventListener('click', closeModal);
+
+  contactForm.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const name = document.getElementById('m-name').value.trim();
+    const email = document.getElementById('m-email').value.trim();
+
+    const message =
+      'Hola! Quiero reservar mi asesoría 1 a 1 de Web con IA.\n\n' +
+      'Nombre: ' + name + '\n' +
+      'Email: ' + email + '\n' +
+      'Día: ' + formatSelectedDate(selectedDate) + '\n' +
+      'Horario: ' + selectedTime + ' hs (' + selectedCountryText + ') - ' + CONFIG.DURATION + ' min\n' +
+      'Precio: ' + CONFIG.CURRENCY + ' ' + CONFIG.PRICE + '\n\n' +
+      'Quedo a la espera de la confirmación y el método de pago.';
+
+    const waUrl = 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+    window.open(waUrl, '_blank');
+
+    showStep(stepSuccess);
+  });
+
+})();
+</script>
+
+</body>
+</html>
