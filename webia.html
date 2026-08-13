@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web con IA — Asesoría personalizada 1 a 1</title>
+<meta name="description" content="Sesión privada de 90 minutos para convertir tu idea en una web funcional con IA. USD 35. 20 lugares disponibles.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#05070c;
+    --bg-1:#080b13;
+    --bg-2:#0c111d;
+    --bg-3:#111729;
+    --line:rgba(255,255,255,0.08);
+    --line-soft:rgba(255,255,255,0.05);
+    --text-0:#f2f5fa;
+    --text-1:#9aa3b5;
+    --text-2:#5f6879;
+    --accent:#3E7BFA;
+    --accent-bright:#7FB4FF;
+    --accent-dim:#1E3A8A;
+    --accent-glow:rgba(62,123,250,0.35);
+    --glass-bg:rgba(18,26,46,0.55);
+    --glass-border:rgba(255,255,255,0.10);
+    --glass-highlight:rgba(255,255,255,0.06);
+    
+    /* Esquinas más agresivas con micro-redondeado */
+    --radius:8px;
+    --radius-pill:999px;
+    --radius-btn:6px; 
+    --ease:cubic-bezier(.16,.8,.28,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg-0);
+    color:var(--text-0);
+    font-family:'Outfit',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* subtle grain */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    opacity:0.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection{ background:var(--accent-dim); color:#fff; }
+
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px; }
+
+  .mono{ font-family:'JetBrains Mono',monospace; }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent-bright);
+    padding:7px 14px;
+    border:1px solid rgba(62,123,250,0.3);
+    border-radius:100px;
+    background:rgba(62,123,250,0.06);
+  }
+  .eyebrow::before{
+    content:"";
+    width:6px;height:6px;border-radius:50%;
+    background:var(--accent-bright);
+    box-shadow:0 0 8px var(--accent-bright);
+  }
+
+  h1,h2,h3{ font-weight:700; letter-spacing:-0.015em; line-height:1.08; }
+
+  .section-title{
+    font-size:clamp(28px,4.2vw,46px);
+    font-weight:800;
+    color:var(--text-0);
+  }
+
+  .section-sub{
+    color:var(--text-1);
+    font-size:16.5px;
+    font-weight:400;
+    line-height:1.6;
+    max-width:560px;
+  }
+
+  .section-pad{ padding:120px 0; position:relative; }
+  @media (max-width:768px){ .section-pad{ padding:80px 0; } }
+
+  .divider-fade{
+    position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg,transparent,var(--line),transparent);
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:600;
+    font-size:15px;
+    border-radius:var(--radius-btn);
+    transition:transform 0.3s var(--ease), box-shadow 0.3s var(--ease), filter 0.3s var(--ease), background 0.3s var(--ease);
+    white-space:nowrap;
+  }
+  .btn-primary{
+    gap:0;
+    padding:6px 6px 6px 28px;
+    background:linear-gradient(180deg,var(--accent-bright),var(--accent));
+    color:#fff;
+    box-shadow:0 1px 0 rgba(255,255,255,0.2) inset, 0 8px 24px -8px var(--accent-glow);
+  }
+  .btn-primary .btn-chip{
+    width:40px;
+    height:40px;
+    margin-left:18px;
+    border-radius:4px;
+    background:#fff;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    transition:transform 0.3s var(--ease);
+  }
+  .btn-primary:hover{
+    transform:translateY(-2px);
+    filter:brightness(1.08);
+    box-shadow:0 1px 0 rgba(255,255,255,0.25) inset, 0 12px 32px -6px var(--accent-glow);
+  }
+  .btn-primary:hover .btn-chip{ transform:translateX(3px); }
+  .btn-primary:active{ transform:translateY(0); }
+
+  .btn-ghost{
+    padding:15px 30px;
+    border-radius:var(--radius-btn);
+    background:rgba(255,255,255,0.03);
+    border:1px solid var(--line);
+    color:var(--text-0);
+  }
+  .btn-ghost:hover{
+    background:rgba(255,255,255,0.06);
+    border-color:rgba(255,255,255,0.18);
+    transform:translateY(-1px);
+  }
+
+  .btn-sm{ padding:5px 5px 5px 22px; font-size:13.5px; border-radius:6px; }
+  .btn-sm .btn-chip{ width:32px; height:32px; margin-left:14px; border-radius:4px; }
+
+  .btn-block{ width:100%; }
+  .btn-block.btn-primary{ justify-content:space-between; }
+
+  /* ---------- Navbar ---------- */
+  .navbar{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:18px 0;
+    transition:padding 0.35s var(--ease), background 0.35s var(--ease), border-color 0.35s var(--ease), backdrop-filter 0.35s var(--ease);
+    border-bottom:1px solid transparent;
+  }
+  .navbar.scrolled{
+    padding:12px 0;
+    background:rgba(8,8,10,0.72);
+    backdrop-filter:blur(16px) saturate(160%);
+    -webkit-backdrop-filter:blur(16px) saturate(160%);
+    border-bottom:1px solid var(--line);
+  }
+  .navbar .wrap{ display:flex; align-items:center; justify-content:space-between; }
+  .logo{
+    font-weight:800; font-size:15px; letter-spacing:-0.01em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo-dot{
+    width:8px;height:8px;border-radius:2px;
+    background:var(--accent-bright);
+    box-shadow:0 0 10px var(--accent-glow);
+  }
+  .nav-links{ display:flex; align-items:center; gap:36px; }
+  .nav-links a{
+    font-size:14px; color:var(--text-1); font-weight:500;
+    transition:color 0.2s;
+    position:relative;
+  }
+  .nav-links a:hover{ color:var(--text-0); }
+  .nav-actions{ display:flex; align-items:center; gap:20px; }
+  .nav-cta{ padding:11px 20px; font-size:13.5px; }
+
+  .burger{
+    display:none;
+    width:36px;height:36px;
+    align-items:center; justify-content:center;
+    flex-direction:column; gap:5px;
+  }
+  .burger span{
+    width:20px; height:1.5px; background:var(--text-0);
+    transition:transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  }
+  .burger.active span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+  .burger.active span:nth-child(2){ opacity:0; }
+  .burger.active span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu{
+    position:fixed; inset:0; z-index:99;
+    background:rgba(8,8,10,0.98);
+    backdrop-filter:blur(20px);
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    gap:32px;
+    opacity:0; visibility:hidden;
+    transition:opacity 0.35s var(--ease), visibility 0.35s;
+  }
+  .mobile-menu.open{ opacity:1; visibility:visible; }
+  .mobile-menu a{ font-size:22px; font-weight:600; color:var(--text-0); }
+  .mobile-menu .btn{ margin-top:12px; }
+
+  @media (max-width:900px){
+    .nav-links{ display:none; }
+    .nav-actions .nav-cta{ display:none; }
+    .burger{ display:flex; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:150px 0 90px;
+    background:
+      radial-gradient(ellipse 70% 50% at 78% 18%, rgba(62,123,250,0.16), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 10% 90%, rgba(62,123,250,0.06), transparent 60%),
+      var(--bg-0);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:60px;
+    align-items:center;
+  }
+  @media (max-width:980px){
+    .hero-grid{ grid-template-columns:1fr; gap:64px; }
+    .hero{ padding-top:120px; }
+  }
+
+  .hero-title{
+    font-size:clamp(38px,5.6vw,68px);
+    margin:22px 0 22px;
+  }
+  .hero-title .accent{
+    background:linear-gradient(180deg,var(--accent-bright),var(--accent));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero-sub{
+    font-size:18px;
+    color:var(--text-1);
+    line-height:1.65;
+    max-width:520px;
+    margin-bottom:36px;
+  }
+
+  .price-block{
+    display:flex;
+    align-items:flex-end;
+    gap:14px;
+    margin-bottom:8px;
+  }
+  .price-value{
+    font-size:52px;
+    font-weight:800;
+    letter-spacing:-0.02em;
+    line-height:1;
+  }
+  .price-meta{
+    color:var(--text-2);
+    font-size:14px;
+    padding-bottom:6px;
+  }
+
+  .avail-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px; letter-spacing:0.06em;
+    color:#93c5fd;
+    background:rgba(62,123,250,0.08);
+    border:1px solid rgba(62,123,250,0.25);
+    padding:8px 14px; border-radius:4px;
+    margin:22px 0 28px;
+  }
+  .avail-badge .pulse{
+    width:6px;height:6px;border-radius:50%;
+    background:#34d399;
+    box-shadow:0 0 6px #34d399;
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:1; } 50%{ opacity:0.35; }
+  }
+
+  .hero-ctas{ display:flex; gap:18px; flex-wrap:wrap; margin-bottom:22px; }
+  .hero-micro{ color:var(--text-2); font-size:13.5px; }
+  .hero-micro strong{ color:var(--text-1); font-weight:500; }
+
+  /* hero visual composition */
+  .hero-visual{
+    position:relative;
+    height:520px;
+    perspective:1200px;
+  }
+  .float-card{
+    position:absolute;
+    background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border:1px solid var(--line);
+    border-radius:6px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+    overflow:hidden;
+    animation:drift 8s ease-in-out infinite;
+  }
+  @keyframes drift{
+    0%,100%{ transform:translateY(0) rotate(var(--r,0deg)); }
+    50%{ transform:translateY(-14px) rotate(var(--r,0deg)); }
+  }
+  .card-code{
+    width:340px; top:20px; right:40px;
+    --r:-3deg;
+    animation-delay:0s;
+  }
+  .card-code .bar{
+    display:flex; gap:6px; padding:10px 14px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .dot{ width:8px;height:8px;border-radius:50%; }
+  .dot.r{ background:#ff5f57; } .dot.y{ background:#febc2e; } .dot.g{ background:#28c840; }
+  .card-code .body{ padding:16px; font-family:'JetBrains Mono',monospace; font-size:11.5px; line-height:1.9; color:var(--text-1); }
+  .card-code .body .k{ color:#93c5fd; } .card-code .body .s{ color:#86efac; } .card-code .body .m{ color:#6b6b76; }
+
+  .card-browser{
+    width:300px; bottom:60px; left:0;
+    --r:2deg;
+    animation-delay:1.2s;
+  }
+  .card-browser .bar{
+    display:flex; align-items:center; gap:8px; padding:10px 14px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .card-browser .url{
+    flex:1; background:rgba(255,255,255,0.04); border-radius:4px;
+    padding:4px 10px; font-size:10px; color:var(--text-2); font-family:'JetBrains Mono',monospace;
+  }
+  .card-browser .body{ padding:18px; }
+  .browser-block{ height:8px; border-radius:2px; background:rgba(255,255,255,0.06); margin-bottom:9px; }
+  .browser-block.w60{ width:60%; }
+  .browser-block.w80{ width:80%; }
+  .browser-block.w40{ width:40%; }
+  .browser-block.accent{ background:var(--accent); height:26px; width:46%; border-radius:4px; margin-top:14px; }
+
+  .card-metric{
+    width:190px; top:250px; right:190px;
+    --r:-2deg;
+    animation-delay:2.4s;
+    padding:18px;
+  }
+  .card-metric .label{ font-size:10px; color:var(--text-2); font-family:'JetBrains Mono',monospace; letter-spacing:0.06em; text-transform:uppercase; }
+  .card-metric .val{ font-size:26px; font-weight:800; margin-top:6px; color:var(--text-0); }
+  .card-metric .spark{ display:flex; align-items:flex-end; gap:3px; height:24px; margin-top:10px; }
+  .card-metric .spark div{ flex:1; background:var(--accent); opacity:0.6; border-radius:1px; }
+
+  .glow-orb{
+    position:absolute; width:280px; height:280px; border-radius:50%;
+    background:radial-gradient(circle, var(--accent-glow), transparent 70%);
+    filter:blur(20px);
+    top:40%; right:10%;
+    z-index:-1;
+    opacity:0.6;
+  }
+
+  @media (max-width:980px){
+    .hero-visual{ height:400px; }
+    .card-code{ width:260px; right:10px; top:0; }
+    .card-browser{ width:220px; left:0; bottom:20px; }
+    .card-metric{ width:150px; top:190px; right:120px; }
+  }
+  @media (max-width:560px){
+    .hero-visual{ height:340px; }
+    .card-code{ width:210px; right:0; top:0; }
+    .card-browser{ width:180px; left:0; bottom:0; }
+    .card-metric{ display:none; }
+  }
+
+  /* ---------- Section 2: process cards ---------- */
+  .bg-1{ background:var(--bg-1); }
+  .process-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    margin-top:56px;
+  }
+  .process-card{
+    background:var(--bg-1);
+    padding:32px 26px;
+    transition:background 0.3s;
+    position:relative;
+  }
+  .process-card:hover{ background:var(--bg-2); }
+  .process-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px; color:var(--accent-bright);
+    margin-bottom:24px;
+    display:block;
+  }
+  .process-card h3{
+    font-size:16.5px; font-weight:700; margin-bottom:10px; letter-spacing:-0.01em;
+  }
+  .process-card p{ font-size:14px; color:var(--text-1); line-height:1.6; }
+  @media (max-width:900px){
+    .process-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:560px){
+    .process-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- Section 3: for who ---------- */
+  .whofor-list{ margin-top:48px; display:grid; grid-template-columns:1fr 1fr; gap:14px 40px; }
+  @media (max-width:700px){ .whofor-list{ grid-template-columns:1fr; } }
+  .whofor-item{
+    display:flex; align-items:flex-start; gap:14px;
+    padding:18px 0;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .whofor-check{
+    flex-shrink:0;
+    width:22px;height:22px; border-radius:4px;
+    background:rgba(62,123,250,0.12);
+    border:1px solid rgba(62,123,250,0.3);
+    display:flex; align-items:center; justify-content:center;
+    margin-top:2px;
+  }
+  .whofor-check svg{ width:12px;height:12px; }
+  .whofor-item p{ font-size:15.5px; color:var(--text-1); line-height:1.5; }
+
+  .whofor-callout{
+    margin-top:56px;
+    padding:36px 40px;
+    border:1px solid rgba(62,123,250,0.25);
+    border-radius:var(--radius);
+    background:linear-gradient(135deg, rgba(62,123,250,0.08), rgba(62,123,250,0.02));
+    text-align:center;
+  }
+  .whofor-callout .l1{ font-size:19px; font-weight:800; color:var(--text-0); margin-bottom:6px; }
+  .whofor-callout .l2{ font-size:15px; color:var(--accent-bright); font-weight:600; }
+
+  /* ---------- Section 4: timeline ---------- */
+  .timeline{
+    margin-top:64px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+    position:relative;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute; top:9px; left:0; right:0; height:1px;
+    background:var(--line);
+  }
+  .tl-step{ padding-right:24px; position:relative; }
+  .tl-dot{
+    width:18px;height:18px;border-radius:50%;
+    background:var(--bg-1);
+    border:2px solid var(--accent);
+    margin-bottom:22px;
+    position:relative; z-index:2;
+    box-shadow:0 0 0 6px var(--bg-1);
+  }
+  .tl-time{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--accent-bright); letter-spacing:0.04em; margin-bottom:10px; }
+  .tl-step h3{ font-size:16px; font-weight:700; margin-bottom:8px; }
+  .tl-step p{ font-size:14px; color:var(--text-1); line-height:1.55; }
+
+  @media (max-width:820px){
+    .timeline{ grid-template-columns:1fr; gap:30px; }
+    .timeline::before{ top:0; bottom:0; left:9px; right:auto; width:1px; height:auto; }
+    .tl-step{ padding-left:34px; padding-right:0; }
+    .tl-dot{ position:absolute; left:0; top:2px; margin-bottom:0; box-shadow:0 0 0 6px var(--bg-1); }
+  }
+
+  /* ---------- Section 5: tools ---------- */
+  .tools-row{
+    display:flex; flex-wrap:wrap; gap:14px; margin-top:48px;
+  }
+  .tool-chip{
+    padding:16px 26px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:15px; font-weight:500;
+    color:var(--text-1);
+    background:var(--bg-2);
+    transition:border-color 0.25s, color 0.25s, transform 0.25s;
+  }
+  .tool-chip:hover{
+    border-color:rgba(62,123,250,0.4);
+    color:var(--text-0);
+    transform:translateY(-2px);
+  }
+
+  /* ---------- Section 7: offer ---------- */
+  .offer-section{
+    position:relative;
+    background:
+      radial-gradient(ellipse 60% 60% at 50% 0%, rgba(62,123,250,0.14), transparent 65%),
+      var(--bg-1);
+    text-align:center;
+  }
+  .offer-title{ font-size:clamp(32px,5vw,54px); margin:22px auto 34px; max-width:700px; }
+  .offer-price{
+    font-size:clamp(64px,10vw,96px);
+    font-weight:800;
+    letter-spacing:-0.02em;
+    background:linear-gradient(180deg,#fff,#93c5fd);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    line-height:1;
+    margin:10px 0 8px;
+  }
+  .offer-price-meta{ color:var(--text-2); font-size:14px; margin-bottom:40px; }
+
+  .offer-list{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:14px 30px;
+    max-width:640px; margin:0 auto 44px;
+  }
+  .offer-list li{
+    list-style:none; display:flex; align-items:center; gap:9px;
+    font-size:15px; color:var(--text-1);
+  }
+  .offer-list svg{ flex-shrink:0; }
+
+  .offer-badge-row{
+    display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:34px;
+  }
+  .offer-fine{ color:var(--text-2); font-size:13.5px; max-width:400px; margin:18px auto 0; }
+
+  /* ---------- Section 8: booking ---------- */
+  .booking-bg{
+    position:relative;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(62,123,250,0.14), transparent 65%),
+      var(--bg-1);
+  }
+  .calendar-wrap{
+    max-width:440px;
+    width:100%;
+    margin:48px auto 0;
+  }
+
+  /* ---------- Calendario de reserva ---------- */
+  .calendar-widget{
+    border:1px solid var(--glass-border);
+    border-radius:8px;
+    padding:24px;
+    background:var(--glass-bg);
+    backdrop-filter:blur(20px) saturate(140%);
+    -webkit-backdrop-filter:blur(20px) saturate(140%);
+    box-shadow:0 1px 0 var(--glass-highlight) inset, 0 30px 60px -30px rgba(0,0,0,0.55);
+  }
+  .cal-header{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:20px;
+  }
+  .cal-month{
+    font-weight:700; font-size:16px; letter-spacing:-0.01em; text-transform:capitalize;
+    color:var(--text-0);
+  }
+  .cal-nav{
+    width:34px; height:34px;
+    border-radius:4px;
+    border:1px solid var(--glass-border);
+    background:rgba(255,255,255,0.03);
+    color:var(--text-1);
+    display:flex; align-items:center; justify-content:center;
+    transition:border-color 0.2s, color 0.2s, opacity 0.2s;
+  }
+  .cal-nav:hover{ border-color:rgba(62,123,250,0.5); color:var(--text-0); }
+  .cal-nav:disabled{ opacity:0.3; pointer-events:none; }
+
+  .cal-weekdays{
+    display:grid; grid-template-columns:repeat(7,1fr);
+    margin-bottom:8px;
+  }
+  .cal-weekdays span{
+    text-align:center; font-size:10.5px; color:var(--text-2);
+    font-family:'JetBrains Mono',monospace;
+    letter-spacing:0.03em;
+  }
+
+  .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+  .cal-day{
+    aspect-ratio:1;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:3px;
+    border-radius:4px;
+    font-size:13px;
+    font-weight:500;
+    color:var(--text-2);
+    border:1px solid transparent;
+  }
+  .cal-day.empty{ visibility:hidden; }
+  .cal-day.available{
+    color:var(--text-0);
+    font-weight:600;
+    cursor:pointer;
+    background:rgba(255,255,255,0.03);
+    transition:border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+  .cal-day.available:hover{ border-color:rgba(62,123,250,0.5); background:rgba(62,123,250,0.08); transform:translateY(-1px); }
+  .cal-day.available .cal-dot{
+    width:3.5px; height:3.5px; border-radius:50%;
+    background:var(--accent-bright);
+  }
+  .cal-day.selected{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+  }
+  .cal-day.selected .cal-dot{ background:#fff; }
+  .cal-day.disabled{ opacity:0.28; font-weight:400; }
+
+  .cal-legend{
+    display:flex; align-items:center; gap:8px;
+    margin-top:18px;
+    font-size:11.5px; color:var(--text-2);
+  }
+  .cal-legend-dot{
+    width:5px; height:5px; border-radius:50%;
+    background:var(--accent-bright);
+  }
+
+  /* ---------- Formulario ---------- */
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:12.5px; color:var(--text-1); margin-bottom:7px; font-weight:500; }
+  .field input, .field textarea{
+    width:100%;
+    background:rgba(255,255,255,0.03);
+    border:1px solid var(--glass-border);
+    border-radius:4px;
+    padding:13px 14px;
+    color:var(--text-0);
+    font-family:inherit;
+    font-size:14.5px;
+    transition:border-color 0.2s, background 0.2s;
+  }
+  .field input:focus, .field textarea:focus{
+    outline:none;
+    border-color:var(--accent);
+    background:var(--bg-0);
+  }
+  .field textarea{ resize:vertical; min-height:80px; }
+
+  /* ---------- Modal de reserva ---------- */
+  .modal-overlay{
+    position:fixed;
+    top:0; left:0; right:0;
+    height:100vh;
+    height:100dvh;
+    z-index:300;
+    background:rgba(4,6,10,0.72);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    display:flex; align-items:center; justify-content:center;
+    padding:16px;
+    opacity:0; visibility:hidden;
+    transition:opacity 0.3s var(--ease), visibility 0.3s;
+  }
+  .modal-overlay.open{ opacity:1; visibility:visible; }
+
+  .modal-box{
+    position:relative;
+    width:100%;
+    max-width:420px;
+    /* Corrección visual móvil: el modal ya no se corta y respira mejor */
+    max-height:90dvh;
+    overflow-y:auto;
+    background:var(--glass-bg);
+    backdrop-filter:blur(24px) saturate(140%);
+    -webkit-backdrop-filter:blur(24px) saturate(140%);
+    border:1px solid var(--glass-border);
+    border-radius:8px;
+    padding:26px 24px 24px;
+    box-shadow:0 40px 100px -24px rgba(0,0,0,0.65), 0 1px 0 var(--glass-highlight) inset;
+    transform:translateY(18px) scale(0.97);
+    transition:transform 0.35s var(--ease);
+  }
+  .modal-overlay.open .modal-box{ transform:translateY(0) scale(1); }
+
+  .modal-close{
+    position:absolute; top:16px; right:16px;
+    width:32px; height:32px;
+    border-radius:4px;
+    border:1px solid var(--glass-border);
+    background:rgba(255,255,255,0.04);
+    color:var(--text-1);
+    display:flex; align-items:center; justify-content:center;
+    transition:border-color 0.2s, color 0.2s, transform 0.25s;
+    flex-shrink:0;
+  }
+  .modal-close:hover{ border-color:rgba(62,123,250,0.4); color:var(--text-0); transform:rotate(90deg); }
+
+  .modal-step{
+    animation:modalStepIn 0.35s var(--ease);
+  }
+  @keyframes modalStepIn{
+    from{ opacity:0; transform:translateX(8px); }
+    to{ opacity:1; transform:translateX(0); }
+  }
+
+  .modal-eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--accent-bright);
+    font-weight:600;
+    margin-bottom:12px;
+  }
+  .modal-title{ font-size:22px; font-weight:700; margin-bottom:8px; padding-right:26px; text-transform:capitalize; letter-spacing:-0.015em; line-height:1.15; }
+  .modal-sub{ font-size:13.5px; color:var(--text-2); line-height:1.55; margin-bottom:24px; }
+
+  .modal-back{
+    display:inline-flex; align-items:center; gap:4px;
+    font-size:12.5px; color:var(--text-2); font-weight:500;
+    margin-bottom:16px;
+    transition:color 0.2s;
+  }
+  .modal-back:hover{ color:var(--text-0); }
+
+  .modal-time-list{ display:flex; flex-direction:column; gap:10px; }
+  .modal-time-option{
+    display:flex; align-items:center; justify-content:space-between;
+    width:100%;
+    padding:16px 18px;
+    border:1px solid var(--glass-border);
+    border-radius:6px;
+    background:rgba(255,255,255,0.03);
+    font-family:'JetBrains Mono',monospace;
+    font-size:15.5px;
+    font-weight:600;
+    color:var(--text-0);
+    transition:border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+  .modal-time-option:hover{ border-color:rgba(62,123,250,0.55); background:rgba(62,123,250,0.08); transform:translateY(-1px); }
+  .modal-time-option .arrow{ color:var(--accent-bright); }
+
+  .modal-summary{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px; color:var(--accent-bright);
+    background:rgba(62,123,250,0.1);
+    border:1px solid rgba(62,123,250,0.25);
+    border-radius:4px;
+    padding:13px 14px;
+    margin-bottom:22px;
+    line-height:1.6;
+  }
+
+  .modal-success{ text-align:center; padding:10px 0 6px; }
+  .modal-success-icon{
+    width:56px; height:56px;
+    border-radius:50%;
+    background:rgba(62,123,250,0.12);
+    border:1px solid rgba(62,123,250,0.3);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--accent-bright);
+    margin:0 auto 20px;
+    animation:successPop 0.5s var(--ease);
+  }
+  @keyframes successPop{
+    0%{ transform:scale(0.6); opacity:0; }
+    70%{ transform:scale(1.08); opacity:1; }
+    100%{ transform:scale(1); }
+  }
+  .modal-success .modal-title{ padding-right:0; }
+
+  /* Ajustes específicos móvil para Modal */
+  @media (max-width: 480px){
+    .modal-box { padding: 20px 16px 16px; width: 92%; }
+    .modal-time-option { padding: 12px 14px; font-size: 14px; margin-bottom: 6px; }
+    .modal-title { font-size: 18px; }
+    .modal-sub { margin-bottom: 16px; }
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq-list{ margin-top:48px; max-width:760px; }
+  .faq-item{ border-bottom:1px solid var(--line-soft); }
+  .faq-q{
+    width:100%;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:24px 4px;
+    font-size:16.5px; font-weight:600;
+    text-align:left;
+    color:var(--text-0);
+  }
+  .faq-icon{
+    width:20px;height:20px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--accent-bright);
+    transition:transform 0.3s var(--ease);
+  }
+  .faq-item.open .faq-icon{ transform:rotate(45deg); }
+  .faq-a{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.4s var(--ease), padding 0.4s var(--ease);
+    color:var(--text-1);
+    font-size:15px;
+    line-height:1.65;
+    padding:0 4px;
+  }
+  .faq-item.open .faq-a{ max-height:200px; padding-bottom:24px; }
+
+  /* ---------- Final CTA ---------- */
+  .final-cta{
+    text-align:center;
+    background:var(--bg-0);
+    position:relative;
+  }
+  .final-cta::before{
+    content:"";
+    position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width:500px; height:500px;
+    background:radial-gradient(circle, var(--accent-glow), transparent 70%);
+    filter:blur(40px);
+    opacity:0.4;
+    pointer-events:none;
+  }
+  .final-title{ font-size:clamp(30px,5vw,50px); margin:22px 0 26px; position:relative; }
+  .final-lines{ font-size:17px; color:var(--text-1); line-height:1.8; margin-bottom:38px; position:relative; }
+  .final-lines strong{ color:var(--text-0); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:56px 0 36px;
+    background:var(--bg-1);
+  }
+  .footer-top{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap;
+    margin-bottom:40px;
+  }
+  .footer-brand p{ color:var(--text-2); font-size:14px; max-width:340px; margin-top:12px; line-height:1.6; }
+  .footer-bottom{
+    border-top:1px solid var(--line-soft);
+    padding-top:24px;
+    color:var(--text-2); font-size:13px;
+  }
+
+  /* ---------- Intro / Splash Screen (Actualizado PRO) ---------- */
+  .intro-screen{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:#05070c; /* Fondo oscuro y neutro */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    /* Exactamente 2 segundos */
+    animation:introOverlayFade 2s cubic-bezier(.4,0,.2,1) forwards;
+  }
+  @keyframes introOverlayFade{
+    0%{ opacity:0; }
+    15%{ opacity:1; }
+    85%{ opacity:1; }
+    100%{ opacity:0; visibility:hidden; }
+  }
+
+  .intro-text-wrap{
+    position:relative;
+    overflow:hidden;
+    padding:0 10px;
+  }
+
+  .intro-text{
+    display:inline-block;
+    font-family:'Outfit',sans-serif;
+    font-weight:900;
+    font-size:clamp(60px, 18vw, 150px);
+    letter-spacing:0.1em;
+    /* Efecto metálico/plateado */
+    background: linear-gradient(
+      110deg,
+      #333333 30%,
+      #a0aab8 45%,
+      #ffffff 50%,
+      #a0aab8 55%,
+      #333333 70%
+    );
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shineSweep 2s ease-in-out forwards;
+  }
+
+  /* Movimiento casi horizontal/diagonal del destello */
+  @keyframes shineSweep {
+    0% { background-position: 200% 0; transform: scale(0.98) translateY(6px); opacity: 0; }
+    15% { transform: scale(1) translateY(0); opacity: 1; }
+    85% { opacity: 1; }
+    100% { background-position: -100% 0; opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .intro-screen, .intro-text{ animation:none; opacity:0; display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= INTRO / SPLASH ================= -->
+<div class="intro-screen" id="introScreen" aria-hidden="true">
+  <div class="intro-text-wrap">
+    <span class="intro-text">CODE</span>
+  </div>
+</div>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar" id="navbar">
+  <div class="wrap">
+    <a href="#top" class="logo"><span class="logo-dot"></span>WEB CON IA</a>
+    <div class="nav-links">
+      <a href="#incluye">Qué incluye</a>
+      <a href="#funciona">Cómo funciona</a>
+      <a href="#preguntas">Preguntas</a>
+    </div>
+    <div class="nav-actions">
+      <a href="#reserva" class="btn btn-primary btn-sm nav-cta"><span>RESERVAR MI ASESORÍA</span><span class="btn-chip"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#incluye" class="mm-link">Qué incluye</a>
+  <a href="#funciona" class="mm-link">Cómo funciona</a>
+  <a href="#preguntas" class="mm-link">Preguntas</a>
+  <a href="#reserva" class="btn btn-primary mm-link"><span>RESERVAR MI ASESORÍA</span><span class="btn-chip"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+</div>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow reveal in">Asesoría personalizada · 1 a 1</span>
+      <h1 class="hero-title reveal in">CONVERTÍ TU IDEA<br>EN UNA WEB FUNCIONAL<br><span class="accent">CON IA.</span></h1>
+      <p class="hero-sub reveal in">Sesión privada de <strong>90 minutos</strong> conmigo, para pasar de una idea a una <strong>web funcional</strong> con IA.</p>
+
+      <div class="price-block reveal in">
+        <span class="price-value">USD 35</span>
+        <span class="price-meta">90 min · En vivo · 1 a 1</span>
+      </div>
+
+      <div class="avail-badge reveal in"><span class="pulse"></span>20 LUGARES DISPONIBLES</div>
+      <p class="hero-micro reveal in" style="margin-bottom:28px;">2 personas por día · durante 10 días</p>
+
+      <div class="hero-ctas reveal in">
+        <a href="#reserva" class="btn btn-primary"><span>RESERVAR MI ASESORÍA</span><span class="btn-chip"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a href="#incluye" class="btn btn-ghost">VER QUÉ INCLUYE ↓</a>
+      </div>
+      <p class="hero-micro reveal in"><strong>Trabajamos sobre TU proyecto</strong>, no sobre un ejemplo genérico.</p>
+    </div>
+
+    <div class="hero-visual reveal in">
+      <div class="glow-orb"></div>
+      <div class="float-card card-code">
+        <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+        <div class="body">
+          <div><span class="m">// tu-proyecto.jsx</span></div>
+          <div><span class="k">const</span> proyecto = {</div>
+          <div>&nbsp;&nbsp;idea: <span class="s">"tu idea"</span>,</div>
+          <div>&nbsp;&nbsp;stack: <span class="s">"IA + código"</span>,</div>
+          <div>&nbsp;&nbsp;estado: <span class="s">"en construcción"</span></div>
+          <div>};</div>
+          <div><span class="m">// listo para deploy →</span></div>
+        </div>
+      </div>
+      <div class="float-card card-browser">
+        <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="url">tu-proyecto.com</span></div>
+        <div class="body">
+          <div class="browser-block w60"></div>
+          <div class="browser-block w80"></div>
+          <div class="browser-block w40"></div>
+          <div class="browser-block accent"></div>
+        </div>
+      </div>
+      <div class="float-card card-metric">
+        <div class="label">Deploy status</div>
+        <div class="val">Live</div>
+        <div class="spark">
+          <div style="height:30%"></div><div style="height:55%"></div><div style="height:40%"></div>
+          <div style="height:80%"></div><div style="height:60%"></div><div style="height:95%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= SECCIÓN 2 ================= -->
+<section class="section-pad bg-1" id="incluye">
+  <div class="divider-fade"></div>
+  <div class="wrap">
+    <h2 class="section-title reveal">NO ES UNA CLASE.<br>TRABAJAMOS SOBRE TU PROYECTO.</h2>
+    <p class="section-sub reveal" style="margin-top:18px;">Trabajamos directamente sobre <strong>lo que vos querés construir</strong>.</p>
+
+    <div class="process-grid reveal">
+      <div class="process-card">
+        <span class="process-num">01</span>
+        <h3>Definimos tu idea</h3>
+        <p>Le damos estructura y claridad a lo que querés crear.</p>
+      </div>
+      <div class="process-card">
+        <span class="process-num">02</span>
+        <h3>Elegimos el camino</h3>
+        <p>Seleccionamos herramientas y estrategia según tu proyecto.</p>
+      </div>
+      <div class="process-card">
+        <span class="process-num">03</span>
+        <h3>Construimos juntos</h3>
+        <p>Generamos, revisamos, corregimos e iteramos en tiempo real.</p>
+      </div>
+      <div class="process-card">
+        <span class="process-num">04</span>
+        <h3>Te llevás un camino claro</h3>
+        <p>Terminás la sesión sabiendo exactamente qué hacer después.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN 3 ================= -->
+<section class="section-pad">
+  <div class="wrap">
+    <span class="eyebrow reveal">¿Para quién es?</span>
+    <h2 class="section-title reveal" style="margin-top:20px;">Esta asesoría es para vos si...</h2>
+
+    <div class="whofor-list reveal">
+      <div class="whofor-item">
+        <span class="whofor-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>Tenés una idea pero no sabés por dónde empezar.</p>
+      </div>
+      <div class="whofor-item">
+        <span class="whofor-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>Querés aprender a desarrollar utilizando IA.</p>
+      </div>
+      <div class="whofor-item">
+        <span class="whofor-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>Ya empezaste una web y estás trabado.</p>
+      </div>
+      <div class="whofor-item">
+        <span class="whofor-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>Querés mejorar el diseño o funcionamiento de una página.</p>
+      </div>
+      <div class="whofor-item">
+        <span class="whofor-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>Querés aprender haciendo, sobre un proyecto real.</p>
+      </div>
+      <div class="whofor-item">
+        <span class="whofor-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p>No sabés programar o tenés conocimientos básicos.</p>
+      </div>
+    </div>
+
+    <div class="whofor-callout reveal">
+      <div class="l1">No necesitás llegar sabiendo exactamente qué hacer.</div>
+      <div class="l2">Para eso es la sesión.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN 4 ================= -->
+<section class="section-pad bg-1" id="funciona">
+  <div class="divider-fade"></div>
+  <div class="wrap">
+    <h2 class="section-title reveal">90 MINUTOS.<br>TU PROYECTO.<br>SIN VUELTAS.</h2>
+
+    <div class="timeline reveal">
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-time">00 — 15 MIN</div>
+        <h3>Entendemos tu idea</h3>
+        <p>Qué querés construir, para quién y qué necesitás.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-time">15 — 30 MIN</div>
+        <h3>Definimos el camino</h3>
+        <p>Herramientas, estructura y estrategia.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-time">30 — 75 MIN</div>
+        <h3>Construimos juntos</h3>
+        <p>Trabajamos directamente sobre tu proyecto.</p>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-time">75 — 90 MIN</div>
+        <h3>Próximos pasos</h3>
+        <p>Qué mejorar, qué falta y cómo continuar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN 5 ================= -->
+<section class="section-pad">
+  <div class="wrap">
+    <h2 class="section-title reveal">LAS HERRAMIENTAS<br>SON SOLO EL MEDIO.</h2>
+    <p class="section-sub reveal" style="margin-top:18px;">No importa cuál uses. Importa <strong>saber usarla</strong> para conseguir un resultado.</p>
+
+    <div class="tools-row reveal">
+      <span class="tool-chip">Claude</span>
+      <span class="tool-chip">ChatGPT</span>
+      <span class="tool-chip">Gemini</span>
+      <span class="tool-chip">Kimi</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN 7: OFERTA ================= -->
+<section class="section-pad offer-section">
+  <div class="divider-fade"></div>
+  <div class="wrap">
+    <span class="eyebrow reveal">Asesoría personalizada · 1 a 1</span>
+    <h2 class="offer-title reveal">TU PROYECTO.<br>UNA HORA Y MEDIA.<br>CONMIGO.</h2>
+
+    <div class="offer-price reveal">USD 35</div>
+    <p class="offer-price-meta reveal">Pago único · sin suscripciones</p>
+
+    <ul class="offer-list reveal">
+      <li><svg width="16" height="16" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>90 minutos en vivo</li>
+      <li><svg width="16" height="16" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Trabajo directo sobre tu proyecto</li>
+      <li><svg width="16" height="16" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Estrategia + IA + desarrollo</li>
+      <li><svg width="16" height="16" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#7FB4FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Próximos pasos claros</li>
+    </ul>
+
+    <div class="offer-badge-row reveal">
+      <a href="#reserva" class="btn btn-primary" style="font-size:16px;"><span>RESERVAR MI LUGAR</span><span class="btn-chip" style="width:46px;height:46px;margin-left:20px;border-radius:4px;"><svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <span class="avail-badge"><span class="pulse"></span>SOLO 20 LUGARES</span>
+      <p class="hero-micro">2 personas por día · durante 10 días</p>
+    </div>
+
+    <p class="offer-fine reveal">Una vez completados los 20 lugares, cierro esta primera tanda.</p>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN 8: RESERVA ================= -->
+<section class="section-pad booking-bg" id="reserva">
+  <div class="wrap">
+    <span class="eyebrow reveal">Reservá tu horario</span>
+    <h2 class="section-title reveal" style="margin-top:20px;">ELEGÍ TU HORARIO</h2>
+    <p class="section-sub reveal" style="margin-top:14px;">Tocá un día disponible y elegí el horario. Todo se confirma por WhatsApp.</p>
+
+    <div class="calendar-wrap reveal">
+      <div class="calendar-widget" id="calendarWidget">
+        <div class="cal-header">
+          <button type="button" class="cal-nav" id="calPrev" aria-label="Mes anterior">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="cal-month" id="calMonthLabel">—</div>
+          <button type="button" class="cal-nav" id="calNext" aria-label="Mes siguiente">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="cal-weekdays">
+          <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-legend"><span class="cal-legend-dot"></span>Días con disponibilidad</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN 9: FAQ ================= -->
+<section class="section-pad bg-1" id="preguntas">
+  <div class="divider-fade"></div>
+  <div class="wrap">
+    <h2 class="section-title reveal">PREGUNTAS FRECUENTES</h2>
+
+    <div class="faq-list reveal" id="faqList">
+      <div class="faq-item">
+        <button class="faq-q">¿Necesito saber programar?<span class="faq-icon">+</span></button>
+        <div class="faq-a">No. La sesión se adapta a tu nivel y a tu proyecto.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Puedo llevar una web que ya empecé?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Sí. Podemos trabajar sobre una web existente o comenzar desde cero.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Puedo ir con una idea que todavía no está definida?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Sí. Podemos estructurarla juntos durante la sesión.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Qué herramientas vamos a utilizar?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Depende del proyecto. Podemos trabajar con diferentes herramientas de IA según lo que necesites.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿La asesoría es una clase?<span class="faq-icon">+</span></button>
+        <div class="faq-a">No exactamente. Es una sesión práctica 1 a 1 enfocada directamente en tu proyecto.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECCIÓN FINAL ================= -->
+<section class="section-pad final-cta">
+  <div class="divider-fade"></div>
+  <div class="wrap">
+    <span class="eyebrow reveal">Asesoría personalizada · 1 a 1</span>
+    <h2 class="final-title reveal">¿LISTO PARA CONSTRUIR TU PROYECTO?</h2>
+    <p class="final-lines reveal"><strong>20 lugares.</strong><br><strong>USD 35.</strong><br><strong>90 minutos 1 a 1.</strong></p>
+    <a href="#reserva" class="btn btn-primary reveal" style="font-size:16px; position:relative;"><span>RESERVAR MI ASESORÍA</span><span class="btn-chip" style="width:46px;height:46px;margin-left:20px;border-radius:4px;"><svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    <p class="hero-micro reveal" style="margin-top:20px;">2 personas por día · durante 10 días</p>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><span class="logo-dot"></span>WEB CON IA</div>
+        <p>Asesorías 1 a 1 para crear y desarrollar proyectos utilizando inteligencia artificial.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 WEB CON IA</div>
+  </div>
+</footer>
+
+<!-- ================= MODAL DE RESERVA ================= -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal-box">
+    <button type="button" class="modal-close" id="modalCloseBtn" aria-label="Cerrar">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2 2l11 11M13 2L2 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+
+    <!-- Paso 1: horarios del día elegido -->
+    <div class="modal-step" id="stepTimes">
+      <div class="modal-eyebrow">Paso 1 de 2</div>
+      <h3 class="modal-title" id="modalDayTitle">—</h3>
+      <p class="modal-sub">Elegí el horario que mejor te quede.</p>
+      <div class="modal-time-list" id="modalTimeList"></div>
+    </div>
+
+    <!-- Paso 2: nombre y email -->
+    <div class="modal-step" id="stepContact" hidden>
+      <button type="button" class="modal-back" id="modalBackBtn">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M7.5 2.5L3 6l4.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Volver
+      </button>
+      <div class="modal-eyebrow">Paso 2 de 2</div>
+      <h3 class="modal-title">Tus datos</h3>
+      <div class="modal-summary" id="modalSummary">—</div>
+      <form id="contactForm">
+        <div class="field">
+          <label for="m-name">Nombre</label>
+          <input type="text" id="m-name" required placeholder="Tu nombre">
+        </div>
+        <div class="field">
+          <label for="m-email">Email</label>
+          <input type="email" id="m-email" required placeholder="tu@email.com">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">
+          <span>CONFIRMAR POR WHATSAPP</span>
+          <span class="btn-chip"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Paso 3: confirmación -->
+    <div class="modal-step modal-success" id="stepSuccess" hidden>
+      <div class="modal-success-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 class="modal-title">¡Listo!</h3>
+      <p class="modal-sub">Se abrió WhatsApp con tu reserva armada. Enviá el mensaje para confirmar tu turno.</p>
+      <button type="button" class="btn btn-ghost btn-block" id="modalDoneBtn">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Intro / splash screen ---------- */
+  const introScreen = document.getElementById('introScreen');
+  if(introScreen){
+    document.body.style.overflow = 'hidden';
+    setTimeout(function(){
+      document.body.style.overflow = '';
+      introScreen.remove();
+    }, 2000); /* Exactamente 2 segundos */
+  }
+
+  /* =========================================================
+     CONFIGURACIÓN — modificar acá precio, cupos y horarios
+  ========================================================== */
+  const CONFIG = {
+    PRICE: 35,
+    CURRENCY: "USD",
+    TOTAL_SLOTS: 20,
+    SLOTS_PER_DAY: 2,
+    DURATION: 90, /* Asegurado en 90 minutos */
+    // Días de la semana en los que doy asesorías (0=Domingo, 1=Lunes ... 6=Sábado)
+    ENABLED_WEEKDAYS: [2, 3, 4, 5], // Martes a Viernes
+    // Horarios fijos disponibles en cada día habilitado
+    AVAILABLE_TIMES: ["18:00", "19:30"],
+    // Cuántos meses hacia adelante se puede navegar en el calendario
+    MONTHS_AHEAD: 2,
+    // ⚠️ Reemplazar por tu número real de WhatsApp, formato internacional sin "+" ni espacios.
+    WHATSAPP_NUMBER: "5492804000000"
+  };
+
+  /* ---------- Navbar scroll state ---------- */
+  const navbar = document.getElementById('navbar');
+  function onScroll(){
+    if(window.scrollY > 20){ navbar.classList.add('scrolled'); }
+    else{ navbar.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  /* ---------- Mobile menu ---------- */
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', function(){
+    burger.classList.toggle('active');
+    mobileMenu.classList.toggle('open');
+  });
+  document.querySelectorAll('.mm-link').forEach(function(el){
+    el.addEventListener('click', function(){
+      burger.classList.remove('active');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  /* ---------- Scroll reveal ---------- */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(function(el){ io.observe(el); });
+
+  /* ---------- FAQ accordion ---------- */
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    const q = item.querySelector('.faq-q');
+    q.addEventListener('click', function(){
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
+      if(!wasOpen){ item.classList.add('open'); }
+    });
+  });
+
+  /* ---------- Booking calendar (mes real, según CONFIG) ---------- */
+  const calGrid = document.getElementById('calGrid');
+  const calMonthLabel = document.getElementById('calMonthLabel');
+  const calPrev = document.getElementById('calPrev');
+  const calNext = document.getElementById('calNext');
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Mes que se está mostrando (arranca en el mes actual).
+  let viewYear = today.getFullYear();
+  let viewMonth = today.getMonth();
+
+  // Límite de navegación hacia adelante.
+  const maxDate = new Date(today.getFullYear(), today.getMonth() + CONFIG.MONTHS_AHEAD, 1);
+
+  let selectedDate = null; // objeto Date del día elegido
+  let selectedTime = null;
+
+  function isSameDay(a, b){
+    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  }
+
+  function isDayAvailable(date){
+    if(date < today) return false;
+    return CONFIG.ENABLED_WEEKDAYS.indexOf(date.getDay()) !== -1;
+  }
+
+  function formatMonthLabel(year, month){
+    const d = new Date(year, month, 1);
+    return d.toLocaleDateString('es-AR', { month: 'long', year: 'numeric' });
+  }
+
+  function formatSelectedDate(date){
+    return date.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' });
+  }
+
+  function renderCalendar(){
+    calGrid.innerHTML = '';
+    calMonthLabel.textContent = formatMonthLabel(viewYear, viewMonth);
+
+    const firstDay = new Date(viewYear, viewMonth, 1);
+    const startOffset = firstDay.getDay(); // 0=domingo
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+    for(let i = 0; i < startOffset; i++){
+      const empty = document.createElement('div');
+      empty.className = 'cal-day empty';
+      calGrid.appendChild(empty);
+    }
+
+    for(let day = 1; day <= daysInMonth; day++){
+      const date = new Date(viewYear, viewMonth, day);
+      const cell = document.createElement('div');
+      cell.textContent = day;
+
+      if(isDayAvailable(date)){
+        cell.className = 'cal-day available';
+        const dot = document.createElement('span');
+        dot.className = 'cal-dot';
+        cell.appendChild(dot);
+
+        cell.addEventListener('click', function(){
+          selectedDate = date;
+          selectedTime = null;
+          openTimesStep();
+        });
+      } else {
+        cell.className = 'cal-day disabled';
+      }
+
+      calGrid.appendChild(cell);
+    }
+
+    // Navegación: no retroceder antes del mes actual, no avanzar más allá del límite.
+    const isAtCurrentMonth = (viewYear === today.getFullYear() && viewMonth === today.getMonth());
+    const nextMonthDate = new Date(viewYear, viewMonth + 1, 1);
+    calPrev.disabled = isAtCurrentMonth;
+    calNext.disabled = nextMonthDate >= maxDate;
+  }
+
+  calPrev.addEventListener('click', function(){
+    viewMonth -= 1;
+    if(viewMonth < 0){ viewMonth = 11; viewYear -= 1; }
+    renderCalendar();
+  });
+  calNext.addEventListener('click', function(){
+    viewMonth += 1;
+    if(viewMonth > 11){ viewMonth = 0; viewYear += 1; }
+    renderCalendar();
+  });
+
+  renderCalendar();
+
+  /* ---------- Modal de reserva (3 pasos: horario → datos → éxito) ---------- */
+  const bookingModal = document.getElementById('bookingModal');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  const modalBackBtn = document.getElementById('modalBackBtn');
+  const modalDoneBtn = document.getElementById('modalDoneBtn');
+  const modalDayTitle = document.getElementById('modalDayTitle');
+  const modalTimeList = document.getElementById('modalTimeList');
+  const modalSummary = document.getElementById('modalSummary');
+  const stepTimes = document.getElementById('stepTimes');
+  const stepContact = document.getElementById('stepContact');
+  const stepSuccess = document.getElementById('stepSuccess');
+  const contactForm = document.getElementById('contactForm');
+
+  function showStep(step){
+    [stepTimes, stepContact, stepSuccess].forEach(function(el){ el.hidden = true; });
+    step.hidden = false;
+  }
+
+  function openModal(){
+    bookingModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(){
+    bookingModal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function openTimesStep(){
+    modalDayTitle.textContent = formatSelectedDate(selectedDate);
+    modalTimeList.innerHTML = '';
+
+    CONFIG.AVAILABLE_TIMES.forEach(function(t){
+      const option = document.createElement('button');
+      option.type = 'button';
+      option.className = 'modal-time-option';
+      option.innerHTML = '<span>' + t + ' hs</span><span class="arrow">→</span>';
+      option.addEventListener('click', function(){
+        selectedTime = t;
+        openContactStep();
+      });
+      modalTimeList.appendChild(option);
+    });
+
+    showStep(stepTimes);
+    openModal();
+  }
+
+  function openContactStep(){
+    modalSummary.textContent = formatSelectedDate(selectedDate) + ' · ' + selectedTime + ' hs · ' + CONFIG.DURATION + ' min · ' + CONFIG.CURRENCY + ' ' + CONFIG.PRICE;
+    showStep(stepContact);
+  }
+
+  modalBackBtn.addEventListener('click', function(){
+    showStep(stepTimes);
+  });
+
+  modalCloseBtn.addEventListener('click', closeModal);
+  modalDoneBtn.addEventListener('click', closeModal);
+
+  // Cerrar tocando el fondo (fuera de la tarjeta), para poder seguir navegando la web.
+  bookingModal.addEventListener('click', function(e){
+    if(e.target === bookingModal) closeModal();
+  });
+
+  /* ---------- Envío del formulario: arma el mensaje y abre WhatsApp ---------- */
+  contactForm.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const name = document.getElementById('m-name').value.trim();
+    const email = document.getElementById('m-email').value.trim();
+
+    const message =
+      'Hola! Quiero reservar mi asesoría 1 a 1 de Web con IA.\n\n' +
+      'Nombre: ' + name + '\n' +
+      'Email: ' + email + '\n' +
+      'Día: ' + formatSelectedDate(selectedDate) + '\n' +
+      'Horario: ' + selectedTime + ' hs (' + CONFIG.DURATION + ' min)\n' +
+      'Precio: ' + CONFIG.CURRENCY + ' ' + CONFIG.PRICE + '\n\n' +
+      'Quedo a la espera de la confirmación y el método de pago.';
+
+    const waUrl = 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+    window.open(waUrl, '_blank');
+
+    showStep(stepSuccess);
+  });
+
+})();
+</script>
+
+</body>
+</html>
